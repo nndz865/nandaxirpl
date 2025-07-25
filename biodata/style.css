@@ -1,0 +1,50 @@
+
+body {
+    background: #f4f6fb;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.biodata-container {
+    background: #fff;
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 32px 28px 24px 28px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.biodata-container h1 {
+    text-align: center;
+    color: #2d3a4b;
+    margin-bottom: 28px;
+    font-size: 2rem;
+    letter-spacing: 1px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+
+td {
+    padding: 8px 4px;
+    color: #333;
+}
+
+tr td:first-child {
+    font-weight: 600;
+    width: 120px;
+    color: #2d3a4b;
+}
+
+tr td:nth-child(2) {
+    width: 10px;
+    color: #888;
+}
+
+tr td:last-child {
+    color: #444;
+}

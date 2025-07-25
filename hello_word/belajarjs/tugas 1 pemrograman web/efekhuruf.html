@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>
+            Pemrograman Web
+        </title>
+    </head>
+    <body>
+        <h1>Efek Huruf</h1>
+        <p id="text">Ini adalah contoh teks yang akan berubah efeknya.</p>
+        <button onclick="changeEffect()">Klik untuk mengubah efek huruf</button>
+
+        <script>
+            function changeEffect() {
+                const textElement = document.getElementById('text');
+                textElement.style.color = 'blue';
+                textElement.style.fontSize = '24px';
+                textElement.style.fontWeight = 'bold';
+                textElement.style.textDecoration = 'underline';
+            }
+        </script>
+    </body>
+</html>

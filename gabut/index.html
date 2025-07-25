@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info Sepak Bola 24 Jam</title>
+    <style>
+        body {
+            background: #e9f5ff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            padding: 32px 28px 24px 28px;
+        }
+        h1 {
+            text-align: center;
+            color: #1a4d7a;
+            margin-bottom: 18px;
+        }
+        .announcement {
+            background: #1a4d7a;
+            color: #fff;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            margin-bottom: 24px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .news {
+            margin-top: 18px;
+        }
+        .news-item {
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        .timestamp {
+            color: #888;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Info Sepak Bola 24 Jam</h1>
+        <div class="announcement">
+            Pengumuman: Website ini memberikan update dan pengumuman sepak bola 24 jam setiap hari!
+        </div>
+        <div class="news" id="news">
+        </div>
+    </div>
+    <script>
+        const newsData = [
+            {
+                title: "Timnas Indonesia Lolos ke Final!",
+                time: "25 Juli 2025, 10:00 WIB",
+                content: "Timnas Indonesia berhasil melaju ke final setelah mengalahkan lawan dengan skor 2-1."
+            },
+            {
+                title: "Transfer Pemain Terbaru Liga 1",
+                time: "25 Juli 2025, 08:30 WIB",
+                content: "Beberapa klub Liga 1 resmi mengumumkan transfer pemain baru untuk musim depan."
+            },
+            {
+                title: "Jadwal Pertandingan Hari Ini",
+                time: "25 Juli 2025, 07:00 WIB",
+                content: "Jangan lewatkan pertandingan seru malam ini antara Persija vs Persebaya."
+            }
+        ];
+        const newsContainer = document.getElementById('news');
+        newsData.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'news-item';
+            div.innerHTML = `<strong>${item.title}</strong><br><span class='timestamp'>${item.time}</span><br>${item.content}`;
+            newsContainer.appendChild(div);
+        });
+    </script>
+</body>
+</html>
