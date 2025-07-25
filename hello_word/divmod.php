@@ -7,4 +7,6 @@
     echo "$angka adalah angka ganjil";
    }
 
+
+   asdasd
 ?>
