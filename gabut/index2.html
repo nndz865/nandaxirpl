@@ -1,9 +1,390 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TopUp Centre — Beli Pulsa & Game Top Up</title>
+    <style>
+        :root{
+            --bg:#0f1724; --card:#0b1220; --accent:#06b6d4; --muted:#94a3b8; --success:#22c55e;
+            --danger:#ef4444; --glass: rgba(255,255,255,0.03);
+        }
+        *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+        body{margin:0;background:linear-gradient(180deg,#071025 0%, #071a2b 100%);color:#e6eef6;min-height:100vh;padding:24px}
+        .wrap{max-width:1100px;margin:0 auto}
+        header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+        header h1{font-size:20px;margin:0}
+        nav a{color:var(--muted);margin-left:14px;text-decoration:none;font-size:14px}
+        .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+        .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+        .section-title{font-weight:600;margin-bottom:10px;color:#dff6fb}
+        .products{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+        .product{background:var(--glass);padding:12px;border-radius:8px;cursor:pointer;border:1px solid rgba(255,255,255,0.03)}
+        .product.selected{outline:2px solid var(--accent);transform:translateY(-4px)}
+        .muted{color:var(--muted);font-size:13px}
+        label{display:block;font-size:13px;margin-top:8px;margin-bottom:6px}
+        input,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
+        .nominals{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+        .nom{padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.02);cursor:pointer;border:1px solid rgba(255,255,255,0.03)}
+        .nom.active{background:linear-gradient(90deg,var(--accent),#07a6b3);color:#001217;border:0}
+        .cart{position:sticky;top:24px}
+        .cart .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+        .btn{display:inline-block;padding:10px 14px;border-radius:8px;background:var(--accent);color:#001217;font-weight:600;border:0;cursor:pointer}
+        .btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+        .orders{margin-top:12px}
+        .order{background:rgba(0,0,0,0.25);padding:10px;border-radius:8px;margin-bottom:8px;border-left:4px solid rgba(255,255,255,0.03)}
+        .status{font-weight:700;padding:6px 8px;border-radius:6px;font-size:12px}
+        .st-pending{background:#fff2cc;color:#7a4b00}
+        .st-success{background:rgba(34,197,94,0.12);color:var(--success)}
+        .st-cancel{background:rgba(239,68,68,0.12);color:var(--danger)}
+        footer{margin-top:22px;color:var(--muted);font-size:13px;text-align:center}
+        @media (max-width:900px){.grid{grid-template-columns:1fr;}.cart{position:relative;top:0}}
+        /* small helpers */
+        .small{font-size:13px;color:var(--muted)}
+        .row-between{display:flex;justify-content:space-between;align-items:center}
+        .hint{font-size:13px;color:var(--muted);margin-top:6px}
+    </style>
 </head>
-<h1>AKU PELAYARAN</h1>
-</html> sadas
+<body>
+    <div class="wrap">
+        <header>
+            <h1>TopUp Centre</h1>
+            <nav>
+                <a href="#" id="nav-home">Beranda</a>
+                <a href="#" id="nav-orders">Pesanan</a>
+                <a href="#" id="nav-admin">Admin</a>
+            </nav>
+        </header>
+
+        <main class="grid">
+            <section id="shop" class="card">
+                <div class="section-title">Pilih Layanan</div>
+
+                <div class="products" id="product-list">
+                    <!-- Produk diisi oleh JS -->
+                </div>
+
+                <div style="margin-top:12px">
+                    <label id="label-target">Masukkan ID Pemain / Nomor HP</label>
+                    <input id="target" placeholder="Contoh: 0812xxxx atau Player123" />
+
+                    <div class="row-between" style="margin-top:8px">
+                        <div style="flex:1;margin-right:8px">
+                            <label>Email (untuk invoice)</label>
+                            <input id="email" placeholder="email@contoh.com" />
+                        </div>
+                        <div style="width:140px">
+                            <label>Metode</label>
+                            <select id="method">
+                                <option value="bank">Bank Transfer</option>
+                                <option value="ewallet">E-Wallet</option>
+                                <option value="cod">COD (lokal)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label style="margin-top:10px">Pilih Nominal</label>
+                    <div class="nominals" id="nominal-list"></div>
+
+                    <div class="hint">Harga sudah termasuk biaya layanan. Sistem ini adalah implementasi front-end; metode bayar mensimulasikan alur nyata tanpa memproses transaksi sebenarnya.</div>
+
+                    <div style="margin-top:12px;display:flex;gap:8px">
+                        <button class="btn" id="btn-buy">Buat Pesanan</button>
+                        <button class="btn outline" id="btn-reset">Reset</button>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="card cart">
+                <div class="section-title">Ringkasan</div>
+                <div class="small">Produk: <span id="summary-product">—</span></div>
+                <div class="small">Target: <span id="summary-target">—</span></div>
+                <div class="small">Nominal: <span id="summary-nominal">—</span></div>
+                <div class="small">Metode: <span id="summary-method">—</span></div>
+                <div class="row" style="margin-top:8px">
+                    <div style="font-weight:700">Total</div>
+                    <div id="summary-price" style="font-weight:700">Rp0</div>
+                </div>
+
+                <div style="margin-top:12px">
+                    <div class="section-title" style="font-size:14px">Pesanan Saya</div>
+                    <div id="orders-empty" class="muted">Belum ada pesanan. Pesanan tersimpan di browser (localStorage).</div>
+                    <div id="orders" class="orders"></div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Orders page (hidden) -->
+        <section id="page-orders" class="card" style="display:none;margin-top:18px">
+            <div class="section-title">Daftar Pesanan</div>
+            <div id="all-orders"></div>
+        </section>
+
+        <!-- Admin page -->
+        <section id="page-admin" class="card" style="display:none;margin-top:18px">
+            <div class="section-title">Admin Panel</div>
+            <div class="small">Masuk sebagai admin untuk melihat & update pesanan.</div>
+            <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                <input id="admin-pass" placeholder="Password admin" />
+                <button class="btn" id="btn-admin-login">Masuk</button>
+                <div class="muted" style="margin-left:auto">Password default: admin123 (ubah di kode)</div>
+            </div>
+            <div id="admin-actions" style="display:none;margin-top:12px">
+                <div class="small">Pesanan Terkini</div>
+                <div id="admin-list" style="margin-top:8px"></div>
+            </div>
+        </section>
+
+        <footer>
+            &copy; TopUp Centre. Jalankan file ini langsung (double-click) atau host di GitHub Pages / Netlify untuk akses online.
+        </footer>
+    </div>
+
+    <script>
+        // ============================
+        // DATA: produk & nominals
+        // ============================
+        const PRODUCTS = [
+            { id: 'gplay', name: 'Google Play (Voucher)', type: 'voucher', icon:'🎮', nominals:[{id:'gp10',label:'Rp10.000',price:10000},{id:'gp50',label:'Rp50.000',price:50000},{id:'gp100',label:'Rp100.000',price:100000}]},
+            { id: 'mlbb', name: 'Mobile Legends', type: 'game', icon:'⚔️', nominals:[{id:'ml1',label:'Diamond 20',price:25000},{id:'ml2',label:'Diamond 86',price:100000}]},
+            { id: 'pulsa', name: 'Pulsa Telkomsel', type: 'pulsa', icon:'📱', nominals:[{id:'p5',label:'5.000',price:5000},{id:'p10',label:'10.000',price:10000},{id:'p25',label:'25.000',price:25000}]},
+            { id: 'ff', name: 'Free Fire (Top-up)', type: 'game', icon:'🔥', nominals:[{id:'ff1',label:'Diamonds 25',price:30000},{id:'ff2',label:'Diamonds 140',price:150000}]}
+        ];
+
+        const ADMIN_PASSWORD = 'admin123'; // ubah jika perlu
+
+        // ============================
+        // State
+        // ============================
+        let state = {
+            product: null,
+            nominal: null,
+            target: '',
+            email: '',
+            method: 'bank'
+        };
+
+        // ============================
+        // Utils
+        // ============================
+        const $ = sel => document.querySelector(sel);
+        const fmt = n => 'Rp' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        const uid = (len=8) => Math.random().toString(36).slice(2,2+len).toUpperCase();
+
+        // ============================
+        // Render products & nominals
+        // ============================
+        function renderProducts(){
+            const el = $('#product-list');
+            el.innerHTML = '';
+            PRODUCTS.forEach(p=>{
+                const d = document.createElement('div');
+                d.className = 'product';
+                d.dataset.id = p.id;
+                d.innerHTML = `<div style="font-size:20px">${p.icon}</div><div style="font-weight:600;margin-top:6px">${p.name}</div><div class="muted" style="margin-top:6px">${p.type}</div>`;
+                d.addEventListener('click', ()=>selectProduct(p.id));
+                el.appendChild(d);
+            });
+        }
+
+        function selectProduct(id){
+            state.product = PRODUCTS.find(x=>x.id===id);
+            state.nominal = null;
+            // update UI
+            document.querySelectorAll('.product').forEach(el=>el.classList.toggle('selected', el.dataset.id===id));
+            $('#summary-product').textContent = state.product.name;
+            $('#label-target').textContent = state.product.type === 'pulsa' ? 'Masukkan Nomor HP' : 'Masukkan ID Pemain / Nomor';
+            renderNominals();
+            updateSummary();
+        }
+
+        function renderNominals(){
+            const el = $('#nominal-list');
+            el.innerHTML = '';
+            if(!state.product) return;
+            state.product.nominals.forEach(n=>{
+                const btn = document.createElement('div');
+                btn.className = 'nom';
+                btn.dataset.id = n.id;
+                btn.innerHTML = `<div style="font-weight:600">${n.label}</div><div class="muted">${fmt(n.price)}</div>`;
+                btn.addEventListener('click', ()=>{
+                    state.nominal = n;
+                    document.querySelectorAll('.nom').forEach(x=>x.classList.toggle('active', x.dataset.id===n.id));
+                    updateSummary();
+                });
+                el.appendChild(btn);
+            });
+        }
+
+        // ============================
+        // Summary & form actions
+        // ============================
+        function updateSummary(){
+            $('#summary-target').textContent = state.target || '—';
+            $('#summary-method').textContent = state.method || '—';
+            $('#summary-nominal').textContent = state.nominal ? state.nominal.label : '—';
+            $('#summary-price').textContent = state.nominal ? fmt(state.nominal.price) : 'Rp0';
+        }
+
+        function resetForm(){
+            state = {product:null,nominal:null,target:'',email:'',method:'bank'};
+            document.getElementById('product-list').querySelectorAll('.product').forEach(x=>x.classList.remove('selected'));
+            document.getElementById('nominal-list').innerHTML = '';
+            $('#target').value='';$('#email').value='';$('#method').value='bank';
+            $('#summary-product').textContent='—';$('#summary-target').textContent='—';$('#summary-nominal').textContent='—';$('#summary-price').textContent='Rp0';$('#summary-method').textContent='—';
+        }
+
+        // ============================
+        // Orders handling (localStorage)
+        // ============================
+        function getOrders(){return JSON.parse(localStorage.getItem('topup_orders')||'[]')}
+        function saveOrders(list){localStorage.setItem('topup_orders', JSON.stringify(list))}
+
+        function createOrder(){
+            // validation
+            if(!state.product){alert('Pilih produk terlebih dahulu.');return}
+            if(!state.nominal){alert('Pilih nominal.');return}
+            const targetVal = $('#target').value.trim();
+            if(!targetVal){alert('Masukkan target (nomor/ID).');return}
+            const emailVal = $('#email').value.trim();
+            if(!emailVal || !/^\S+@\S+\.\S+$/.test(emailVal)){ if(!confirm('Email tidak valid. Lanjut tanpa email?')) return; }
+            state.target = targetVal; state.email = emailVal; state.method = $('#method').value;
+
+            const orders = getOrders();
+            const newOrder = {
+                id: 'ORD' + uid(6),
+                productId: state.product.id,
+                productName: state.product.name,
+                nominalId: state.nominal.id,
+                nominalLabel: state.nominal.label,
+                price: state.nominal.price,
+                target: state.target,
+                email: state.email,
+                method: state.method,
+                status: 'pending',
+                createdAt: Date.now()
+            };
+            orders.unshift(newOrder);
+            saveOrders(orders);
+            renderOrders();
+            alert('Pesanan dibuat: ' + newOrder.id + '\\nSilakan cek daftar pesanan di kolom kanan.\n(Pembayaran disimulasikan)');
+            // optionally auto-open orders
+            renderAllOrdersPage();
+        }
+
+        function renderOrders(){
+            const list = getOrders().slice(0,6);
+            const el = $('#orders');
+            const empty = $('#orders-empty');
+            el.innerHTML = '';
+            if(list.length===0){ empty.style.display='block'; return }
+            empty.style.display='none';
+            list.forEach(o=>{
+                const d = document.createElement('div');
+                d.className = 'order';
+                d.innerHTML = `
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div><div style="font-weight:700">${o.productName} — ${o.nominalLabel}</div><div class="muted">${o.target} • ${new Date(o.createdAt).toLocaleString()}</div></div>
+                        <div style="text-align:right">
+                            <div class="small">${fmt(o.price)}</div>
+                            <div style="margin-top:6px"><span class="status ${o.status==='pending'?'st-pending':o.status==='success'?'st-success':'st-cancel'}">${o.status.toUpperCase()}</span></div>
+                        </div>
+                    </div>
+                `;
+                el.appendChild(d);
+            });
+        }
+
+        function renderAllOrdersPage(){
+            const el = $('#all-orders');
+            const orders = getOrders();
+            el.innerHTML = orders.length ? orders.map(o=>`
+                <div class="order" style="display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <div style="font-weight:700">${o.id} — ${o.productName} ${o.nominalLabel}</div>
+                        <div class="muted">${o.target} • ${new Date(o.createdAt).toLocaleString()} • ${o.method}</div>
+                        <div class="small">Email: ${o.email || '-'}</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div style="font-weight:700">${fmt(o.price)}</div>
+                        <div style="margin-top:6px"><span class="status ${o.status==='pending'?'st-pending':o.status==='success'?'st-success':'st-cancel'}">${o.status.toUpperCase()}</span></div>
+                    </div>
+                </div>
+            `).join('') : '<div class="muted">Belum ada pesanan.</div>';
+        }
+
+        // ============================
+        // Admin actions (simulate fulfillment)
+        // ============================
+        function adminLogin(pass){
+            if(pass===ADMIN_PASSWORD){
+                $('#admin-actions').style.display='block';
+                $('#admin-pass').value='';
+                renderAdminList();
+            } else alert('Password salah.');
+        }
+
+        function renderAdminList(){
+            const el = $('#admin-list');
+            const orders = getOrders();
+            if(orders.length===0){ el.innerHTML = '<div class="muted">Tidak ada pesanan.</div>'; return }
+            el.innerHTML = orders.map(o=>`
+                <div class="order" style="display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <div style="font-weight:700">${o.id} — ${o.productName} ${o.nominalLabel}</div>
+                        <div class="muted">${o.target} • ${new Date(o.createdAt).toLocaleString()} • ${o.method}</div>
+                    </div>
+                    <div style="text-align:right">
+                        <div style="font-weight:700">${fmt(o.price)}</div>
+                        <div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end">
+                            ${o.status==='pending' ? `<button class="btn" data-act="complete" data-id="${o.id}">Selesai</button>` : ''}
+                            ${o.status!=='cancel' ? `<button class="btn outline" data-act="cancel" data-id="${o.id}">Batalkan</button>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            // bind actions
+            el.querySelectorAll('button[data-act]').forEach(b=>{
+                b.addEventListener('click', e=>{
+                    const id = b.dataset.id; const act = b.dataset.act;
+                    const orders = getOrders();
+                    const idx = orders.findIndex(x=>x.id===id);
+                    if(idx===-1) return alert('Pesanan tidak ditemukan');
+                    if(act==='complete'){ orders[idx].status='success'; alert('Pesanan ' + id + ' ditandai selesai.'); }
+                    if(act==='cancel'){ orders[idx].status='cancel'; alert('Pesanan ' + id + ' dibatalkan.'); }
+                    saveOrders(orders);
+                    renderAdminList(); renderOrders(); renderAllOrdersPage();
+                });
+            });
+        }
+
+        // ============================
+        // Event bindings
+        // ============================
+        document.addEventListener('DOMContentLoaded', ()=>{
+            renderProducts();
+            renderOrders();
+            renderAllOrdersPage();
+
+            // form bindings
+            $('#target').addEventListener('input', e=>{ state.target = e.target.value; updateSummary(); });
+            $('#email').addEventListener('input', e=>{ state.email = e.target.value; updateSummary(); });
+            $('#method').addEventListener('change', e=>{ state.method = e.target.value; updateSummary(); });
+
+            $('#btn-buy').addEventListener('click', createOrder);
+            $('#btn-reset').addEventListener('click', ()=>{ if(confirm('Reset semua pilihan?')) resetForm(); });
+
+            // nav
+            $('#nav-home').addEventListener('click', e=>{ e.preventDefault(); $('#shop').style.display='block'; $('#page-orders').style.display='none'; $('#page-admin').style.display='none'; window.scrollTo({top:0,behavior:'smooth'})});
+            $('#nav-orders').addEventListener('click', e=>{ e.preventDefault(); $('#shop').style.display='none'; $('#page-orders').style.display='block'; $('#page-admin').style.display='none'; renderAllOrdersPage(); window.scrollTo({top:0,behavior:'smooth'})});
+            $('#nav-admin').addEventListener('click', e=>{ e.preventDefault(); $('#shop').style.display='none'; $('#page-orders').style.display='none'; $('#page-admin').style.display='block'; window.scrollTo({top:0,behavior:'smooth'})});
+
+            // admin login
+            $('#btn-admin-login').addEventListener('click', ()=>adminLogin($('#admin-pass').value));
+
+            // load sample selection
+            selectProduct(PRODUCTS[0].id);
+        });
+    </script>
+</body>
+</html>
