@@ -3,388 +3,756 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>TopUp Centre — Beli Pulsa & Game Top Up</title>
+    <title>AI Tools Suite — Lokal</title>
     <style>
         :root{
-            --bg:#0f1724; --card:#0b1220; --accent:#06b6d4; --muted:#94a3b8; --success:#22c55e;
-            --danger:#ef4444; --glass: rgba(255,255,255,0.03);
+            --bg:#0f1724; --card:#0b1220; --muted:#9aa9bf; --accent:#7c5cff; --glass:rgba(255,255,255,0.03);
+            --success:#16a34a; --danger:#ef4444; --glass2:rgba(255,255,255,0.02);
         }
-        *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
-        body{margin:0;background:linear-gradient(180deg,#071025 0%, #071a2b 100%);color:#e6eef6;min-height:100vh;padding:24px}
-        .wrap{max-width:1100px;margin:0 auto}
-        header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-        header h1{font-size:20px;margin:0}
-        nav a{color:var(--muted);margin-left:14px;text-decoration:none;font-size:14px}
-        .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
-        .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
-        .section-title{font-weight:600;margin-bottom:10px;color:#dff6fb}
-        .products{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-        .product{background:var(--glass);padding:12px;border-radius:8px;cursor:pointer;border:1px solid rgba(255,255,255,0.03)}
-        .product.selected{outline:2px solid var(--accent);transform:translateY(-4px)}
-        .muted{color:var(--muted);font-size:13px}
-        label{display:block;font-size:13px;margin-top:8px;margin-bottom:6px}
-        input,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
-        .nominals{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-        .nom{padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.02);cursor:pointer;border:1px solid rgba(255,255,255,0.03)}
-        .nom.active{background:linear-gradient(90deg,var(--accent),#07a6b3);color:#001217;border:0}
-        .cart{position:sticky;top:24px}
-        .cart .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-        .btn{display:inline-block;padding:10px 14px;border-radius:8px;background:var(--accent);color:#001217;font-weight:600;border:0;cursor:pointer}
-        .btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
-        .orders{margin-top:12px}
-        .order{background:rgba(0,0,0,0.25);padding:10px;border-radius:8px;margin-bottom:8px;border-left:4px solid rgba(255,255,255,0.03)}
-        .status{font-weight:700;padding:6px 8px;border-radius:6px;font-size:12px}
-        .st-pending{background:#fff2cc;color:#7a4b00}
-        .st-success{background:rgba(34,197,94,0.12);color:var(--success)}
-        .st-cancel{background:rgba(239,68,68,0.12);color:var(--danger)}
-        footer{margin-top:22px;color:var(--muted);font-size:13px;text-align:center}
-        @media (max-width:900px){.grid{grid-template-columns:1fr;}.cart{position:relative;top:0}}
-        /* small helpers */
-        .small{font-size:13px;color:var(--muted)}
-        .row-between{display:flex;justify-content:space-between;align-items:center}
-        .hint{font-size:13px;color:var(--muted);margin-top:6px}
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue";
+            background:linear-gradient(180deg,#071024 0%,#06101a 100%); color:#e6eef8;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+        }
+        header{
+            padding:18px 24px; display:flex; align-items:center; gap:18px; border-bottom:1px solid rgba(255,255,255,0.03);
+            background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+            position:sticky; top:0; z-index:30;
+        }
+        .logo{
+            display:flex; align-items:center; gap:12px;
+        }
+        .logo .mark{
+            width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+            background:linear-gradient(135deg,var(--accent),#4dd0e1); color:#081225; font-weight:700;
+            box-shadow:0 6px 18px rgba(124,92,255,0.18), inset 0 -4px 10px rgba(0,0,0,0.25)
+        }
+        .title{font-weight:700; font-size:16px}
+        .subtitle{font-size:12px; color:var(--muted); margin-top:2px}
+        .container{display:grid; grid-template-columns:260px 1fr; gap:18px; padding:18px; max-width:1200px; margin:18px auto}
+        aside{
+            background:var(--card); border-radius:12px; padding:12px; min-height:320px; box-shadow:0 8px 30px rgba(2,6,23,0.6);
+        }
+        .nav{display:flex; flex-direction:column; gap:8px}
+        .nav button{
+            display:flex; gap:12px; align-items:center; border:0; background:transparent; color:var(--muted);
+            padding:10px 10px; text-align:left; border-radius:8px; cursor:pointer; width:100%;
+        }
+        .nav button.active{background:var(--glass); color:#fff; box-shadow:inset 0 1px 0 rgba(255,255,255,0.02)}
+        main{padding:18px; border-radius:12px; background:linear-gradient(180deg,var(--glass2),transparent); min-height:520px}
+        .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:14px; border-radius:10px; margin-bottom:12px; border:1px solid rgba(255,255,255,0.02)}
+        textarea{width:100%; min-height:160px; resize:vertical; background:transparent; color:inherit; border:1px dashed rgba(255,255,255,0.04); padding:12px; border-radius:8px}
+        .row{display:flex; gap:10px; align-items:center}
+        .btn{
+            background:linear-gradient(90deg,var(--accent),#4dd0e1); color:#061225; border:0; padding:8px 12px; border-radius:8px; cursor:pointer;
+            font-weight:600;
+        }
+        .btn.ghost{background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.03)}
+        .small{font-size:13px; padding:6px 10px}
+        .output{white-space:pre-wrap; word-break:break-word; background:transparent; padding:12px; min-height:120px; border-radius:8px; border:1px solid rgba(255,255,255,0.03)}
+        .flex{display:flex; gap:12px}
+        .chip{background:rgba(255,255,255,0.03); padding:6px 8px; border-radius:999px; color:var(--muted); font-size:13px}
+        footer{padding:14px; text-align:center; color:var(--muted); font-size:13px}
+        .meta{color:var(--muted); font-size:13px}
+        .tag-list{display:flex; gap:8px; flex-wrap:wrap}
+        .highlight{color:var(--accent); font-weight:700}
+        .keyword{display:inline-block; background:rgba(124,92,255,0.12); color:var(--accent); padding:6px 8px; border-radius:8px; margin:4px 6px; font-weight:600}
+        .warn{color:var(--danger)}
+        .ok{color:var(--success)}
+        .controls{display:flex; gap:8px; margin-top:8px; flex-wrap:wrap}
+        @media (max-width:880px){
+            .container{grid-template-columns:1fr; padding:12px}
+            aside{order:2}
+            header{padding:12px}
+        }
     </style>
 </head>
 <body>
-    <div class="wrap">
-        <header>
-            <h1>TopUp Centre</h1>
-            <nav>
-                <a href="#" id="nav-home">Beranda</a>
-                <a href="#" id="nav-orders">Pesanan</a>
-                <a href="#" id="nav-admin">Admin</a>
+    <header>
+        <div class="logo" aria-hidden="true">
+            <div class="mark">AI</div>
+            <div>
+                <div class="title">AI Tools Suite</div>
+                <div class="subtitle">Koleksi alat AI lokal — bisa dijalankan sebagai halaman statis</div>
+            </div>
+        </div>
+        <div style="flex:1"></div>
+        <div class="meta">Berjalan lokal / online tanpa API eksternal</div>
+    </header>
+
+    <div class="container">
+        <aside>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                <div>
+                    <div style="font-weight:700">Alat</div>
+                    <div class="subtitle">Pilih alat di bawah</div>
+                </div>
+                <div style="text-align:right">
+                    <div class="chip" id="charCount">0 char</div>
+                </div>
+            </div>
+
+            <nav class="nav" role="tablist" id="toolList">
+                <button class="active" data-tool="analyzer">Text Analyzer</button>
+                <button data-tool="summarizer">Summarizer (Ekstraktif)</button>
+                <button data-tool="keywords">Keyword Extractor</button>
+                <button data-tool="paraphrase">Paraphraser Sederhana</button>
+                <button data-tool="sentiment">Sentiment Analyzer</button>
+                <button data-tool="grammar">Grammar Checker</button>
+                <button data-tool="titles">Title Generator</button>
+                <button data-tool="chat">Q&A Lokal</button>
+                <button data-tool="notes">Notes & Save</button>
             </nav>
-        </header>
 
-        <main class="grid">
-            <section id="shop" class="card">
-                <div class="section-title">Pilih Layanan</div>
+            <div style="margin-top:12px" class="card">
+                <div style="font-weight:700">Tips</div>
+                <div class="subtitle" style="margin-top:6px">
+                    Ini adalah versi yang berjalan sepenuhnya di browser. Beberapa fitur cerdas dibuat dengan heuristik & algoritme sederhana.
+                </div>
+            </div>
 
-                <div class="products" id="product-list">
-                    <!-- Produk diisi oleh JS -->
+            <div class="card">
+                <div style="font-weight:700">Ekspor / Tindakan</div>
+                <div class="controls" style="margin-top:8px">
+                    <button class="btn small" onclick="copyOutput()">Copy Output</button>
+                    <button class="btn small ghost" onclick="downloadOutput()">Download .txt</button>
+                    <button class="btn small ghost" onclick="clearAll()">Clear</button>
+                </div>
+            </div>
+
+        </aside>
+
+        <main>
+            <!-- Input card -->
+            <section class="card" id="inputSection">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <div style="font-weight:700">Masukkan Teks</div>
+                        <div class="subtitle">Tuliskan atau tempel teks yang ingin diproses oleh alat</div>
+                    </div>
+                    <div class="meta">Local only — tidak mengirim data ke server</div>
                 </div>
 
-                <div style="margin-top:12px">
-                    <label id="label-target">Masukkan ID Pemain / Nomor HP</label>
-                    <input id="target" placeholder="Contoh: 0812xxxx atau Player123" />
+                <div style="margin-top:10px">
+                    <textarea id="inputText" placeholder="Tempel teks di sini..."></textarea>
+                </div>
 
-                    <div class="row-between" style="margin-top:8px">
-                        <div style="flex:1;margin-right:8px">
-                            <label>Email (untuk invoice)</label>
-                            <input id="email" placeholder="email@contoh.com" />
-                        </div>
-                        <div style="width:140px">
-                            <label>Metode</label>
-                            <select id="method">
-                                <option value="bank">Bank Transfer</option>
-                                <option value="ewallet">E-Wallet</option>
-                                <option value="cod">COD (lokal)</option>
-                            </select>
-                        </div>
+                <div class="row" style="margin-top:8px; justify-content:space-between;">
+                    <div class="flex">
+                        <select id="lang" class="chip" style="border:0;background:transparent;color:var(--muted)">
+                            <option value="id">Bahasa Indonesia</option>
+                            <option value="en">English</option>
+                        </select>
+                        <div class="chip" id="wordCount">0 kata</div>
+                        <div class="chip" id="sentCount">0 kalimat</div>
+                        <div class="chip" id="readTime">0 mnt</div>
                     </div>
 
-                    <label style="margin-top:10px">Pilih Nominal</label>
-                    <div class="nominals" id="nominal-list"></div>
-
-                    <div class="hint">Harga sudah termasuk biaya layanan. Sistem ini adalah implementasi front-end; metode bayar mensimulasikan alur nyata tanpa memproses transaksi sebenarnya.</div>
-
-                    <div style="margin-top:12px;display:flex;gap:8px">
-                        <button class="btn" id="btn-buy">Buat Pesanan</button>
-                        <button class="btn outline" id="btn-reset">Reset</button>
+                    <div>
+                        <button class="btn small" onclick="runTool()">Jalankan</button>
+                        <button class="btn small ghost" onclick="loadExample()">Contoh</button>
                     </div>
                 </div>
             </section>
 
-            <aside class="card cart">
-                <div class="section-title">Ringkasan</div>
-                <div class="small">Produk: <span id="summary-product">—</span></div>
-                <div class="small">Target: <span id="summary-target">—</span></div>
-                <div class="small">Nominal: <span id="summary-nominal">—</span></div>
-                <div class="small">Metode: <span id="summary-method">—</span></div>
-                <div class="row" style="margin-top:8px">
-                    <div style="font-weight:700">Total</div>
-                    <div id="summary-price" style="font-weight:700">Rp0</div>
+            <!-- Tools area -->
+            <section id="toolsArea">
+                <!-- Analyzer -->
+                <div class="card tool" id="tool-analyzer" role="tabpanel">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <div style="font-weight:700">Text Analyzer</div>
+                            <div class="subtitle">Statistik, skor keterbacaan dasar, ringkasan cepat</div>
+                        </div>
+                        <div class="meta">Algoritme lokal</div>
+                    </div>
+
+                    <div style="margin-top:10px">
+                        <div class="row">
+                            <div style="flex:1">
+                                <div class="output" id="analyzerOutput">Jalankan alat untuk melihat hasil.</div>
+                            </div>
+                            <div style="width:220px">
+                                <div style="font-weight:700">Detail</div>
+                                <div class="meta" id="analyzerMeta" style="margin-top:8px">—</div>
+                                <div style="margin-top:10px">
+                                    <div class="tag-list" id="topWords"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div style="margin-top:12px">
-                    <div class="section-title" style="font-size:14px">Pesanan Saya</div>
-                    <div id="orders-empty" class="muted">Belum ada pesanan. Pesanan tersimpan di browser (localStorage).</div>
-                    <div id="orders" class="orders"></div>
+                <!-- Summarizer -->
+                <div class="card tool" id="tool-summarizer" style="display:none">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <div style="font-weight:700">Summarizer</div>
+                            <div class="subtitle">Ekstraktif: pilih kalimat paling representatif</div>
+                        </div>
+                        <div class="meta">Pilih panjang ringkasan</div>
+                    </div>
+
+                    <div style="margin-top:10px">
+                        <div style="display:flex;gap:8px;align-items:center">
+                            <label class="meta">Panjang:</label>
+                            <select id="summaryLength" class="chip">
+                                <option value="1">Sangat singkat (1)</option>
+                                <option value="2" selected>Pendek (2)</option>
+                                <option value="3">Sedang (3)</option>
+                                <option value="5">Panjang (5)</option>
+                            </select>
+                            <button class="btn small" onclick="summarize()">Buat Ringkasan</button>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="output" id="summaryOutput">Ringkasan akan muncul di sini.</div>
+                        </div>
+                    </div>
                 </div>
-            </aside>
+
+                <!-- Keywords -->
+                <div class="card tool" id="tool-keywords" style="display:none">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <div style="font-weight:700">Keyword Extractor</div>
+                            <div class="subtitle">Ekstrak kata/istilah penting berdasarkan frekuensi</div>
+                        </div>
+                        <div class="meta">Atur jumlah keyword</div>
+                    </div>
+
+                    <div style="margin-top:10px">
+                        <div style="display:flex;gap:8px;align-items:center">
+                            <input id="kwCount" type="number" value="10" min="3" max="40" style="width:80px;padding:6px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:inherit" />
+                            <button class="btn small" onclick="extractKeywords()">Ekstrak</button>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div id="keywordsOutput" class="output">Tidak ada keyword.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paraphrase -->
+                <div class="card tool" id="tool-paraphrase" style="display:none">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <div style="font-weight:700">Paraphraser Sederhana</div>
+                            <div class="subtitle">Mengganti sinonim umum & menyusun ulang frasa</div>
+                        </div>
+                        <div class="meta">Heuristik lokal</div>
+                    </div>
+
+                    <div style="margin-top:10px">
+                        <div style="display:flex;gap:8px;align-items:center">
+                            <button class="btn small" onclick="paraphrase()">Parafrase Sekarang</button>
+                            <button class="btn small ghost" onclick="paraphrase(1)">Variasi 1</button>
+                            <button class="btn small ghost" onclick="paraphrase(2)">Variasi 2</button>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="output" id="paraphraseOutput">Hasil parafrase akan muncul di sini.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sentiment -->
+                <div class="card tool" id="tool-sentiment" style="display:none">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <div style="font-weight:700">Sentiment Analyzer</div>
+                            <div class="subtitle">Analisis polaritas sederhana (lexicon-based)</div>
+                        </div>
+                        <div class="meta">Skor & kata-kata penting</div>
+                    </div>
+
+                    <div style="margin-top:10px">
+                        <div style="display:flex;gap:8px;align-items:center">
+                            <button class="btn small" onclick="analyzeSentiment()">Analisis</button>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="output" id="sentimentOutput">Klik Analisis untuk melihat hasil.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grammar -->
+                <div class="card tool" id="tool-grammar" style="display:none">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <div style="font-weight:700">Grammar Checker</div>
+                            <div class="subtitle">Deteksi masalah umum: kata terduplikasi, tanda baca, kapitalisasi</div>
+                        </div>
+                        <div class="meta">Saran perbaikan</div>
+                    </div>
+
+                    <div style="margin-top:10px">
+                        <div style="display:flex;gap:8px;align-items:center">
+                            <button class="btn small" onclick="grammarCheck()">Periksa</button>
+                            <button class="btn small ghost" onclick="applyGrammarFix()">Terapkan Perbaikan Otomatis</button>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="output" id="grammarOutput">Hasil pengecekan akan muncul di sini.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Titles -->
+                <div class="card tool" id="tool-titles" style="display:none">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <div style="font-weight:700">Title Generator</div>
+                            <div class="subtitle">Buat beberapa opsi judul menarik dari teks</div>
+                        </div>
+                        <div class="meta">Gunakan untuk blog, artikel, slide</div>
+                    </div>
+
+                    <div style="margin-top:10px">
+                        <div style="display:flex;gap:8px;align-items:center">
+                            <button class="btn small" onclick="generateTitles()">Buat Judul</button>
+                            <select id="titleTone" class="chip">
+                                <option value="normal">Biasa</option>
+                                <option value="clickbait">Clickbait</option>
+                                <option value="formal">Formal</option>
+                                <option value="creative">Kreatif</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="output" id="titlesOutput">Judul akan muncul di sini.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat -->
+                <div class="card tool" id="tool-chat" style="display:none">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <div style="font-weight:700">Q&A Lokal</div>
+                            <div class="subtitle">Tanya tentang teks yang dimasukkan — jawaban berbasis heuristik & ekstraksi</div>
+                        </div>
+                        <div class="meta">Rule-based</div>
+                    </div>
+
+                    <div style="margin-top:10px">
+                        <div class="row">
+                            <input id="chatQuestion" placeholder="Tanya sesuatu tentang teks (mis. 'Ringkas inti paragraf 2')" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
+                            <button class="btn small" onclick="chatAnswer()">Tanya</button>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="output" id="chatOutput">Jawaban akan muncul di sini.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="card tool" id="tool-notes" style="display:none">
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                            <div style="font-weight:700">Notes & Save</div>
+                            <div class="subtitle">Simpan teks ke localStorage / unduh</div>
+                        </div>
+                        <div class="meta">Tersimpan di browser</div>
+                    </div>
+
+                    <div style="margin-top:10px">
+                        <div class="row">
+                            <input id="noteTitle" placeholder="Judul catatan" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
+                            <button class="btn small" onclick="saveNote()">Simpan</button>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="output" id="notesOutput">Catatan tersimpan akan muncul di sini.</div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <footer>
+                AI Tools Suite • Dijalan secara lokal / online sebagai halaman statis • Data tidak dikirim ke server
+            </footer>
         </main>
-
-        <!-- Orders page (hidden) -->
-        <section id="page-orders" class="card" style="display:none;margin-top:18px">
-            <div class="section-title">Daftar Pesanan</div>
-            <div id="all-orders"></div>
-        </section>
-
-        <!-- Admin page -->
-        <section id="page-admin" class="card" style="display:none;margin-top:18px">
-            <div class="section-title">Admin Panel</div>
-            <div class="small">Masuk sebagai admin untuk melihat & update pesanan.</div>
-            <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-                <input id="admin-pass" placeholder="Password admin" />
-                <button class="btn" id="btn-admin-login">Masuk</button>
-                <div class="muted" style="margin-left:auto">Password default: nndzx8832 (ubah dikode)</div>
-            </div>
-            <div id="admin-actions" style="display:none;margin-top:12px">
-                <div class="small">Pesanan Terkini</div>
-                <div id="admin-list" style="margin-top:8px"></div>
-            </div>
-        </section>
-
-        <footer>
-            &copy; TopUp Centre. Jalankan file ini langsung (double-click) atau host di GitHub Pages / Netlify untuk akses online.
-        </footer>
     </div>
 
     <script>
-        // ============================
-        // DATA: produk & nominals
-        // ============================
-        const PRODUCTS = [
-            { id: 'gplay', name: 'Google Play (Voucher)', type: 'voucher', icon:'🎮', nominals:[{id:'gp10',label:'Rp10.000',price:10000},{id:'gp50',label:'Rp50.000',price:50000},{id:'gp100',label:'Rp100.000',price:100000}]},
-            { id: 'mlbb', name: 'Mobile Legends', type: 'game', icon:'⚔️', nominals:[{id:'ml1',label:'Diamond 20',price:25000},{id:'ml2',label:'Diamond 86',price:100000}]},
-            { id: 'pulsa', name: 'Pulsa Telkomsel', type: 'pulsa', icon:'📱', nominals:[{id:'p5',label:'5.000',price:5000},{id:'p10',label:'10.000',price:10000},{id:'p25',label:'25.000',price:25000}]},
-            { id: 'ff', name: 'Free Fire (Top-up)', type: 'game', icon:'🔥', nominals:[{id:'ff1',label:'Diamonds 25',price:30000},{id:'ff2',label:'Diamonds 140',price:150000}]}
-        ];
-
-        const ADMIN_PASSWORD = 'nndzx8832'; // ubah jika perlu
-
-        // ============================
-        // State
-        // ============================
-        let state = {
-            product: null,
-            nominal: null,
-            target: '',
-            email: '',
-            method: 'bank'
+        // GitHub Copilot
+        // Basic utilities and stopwords
+        const stopwords = new Set(("dan atau tetapi karena untuk dengan yang adalah dari pada tidak sangat juga ke pada ini itu saya kamu kita mereka sebagai oleh saat setelah sebelum agar ketika dimana siapa bagaimana mengapa").split(' '));
+        const englishStop = new Set(["the","and","is","in","it","of","to","a","for","on","that","this","with","as","are","was","were","be","by","an","or","from","at","which","but","not","have","has","had"]);
+        const smallSynonyms = {
+            "bagus":["baik","keren","hebat"], "buruk":["jelek","buruk sekali"], "mempercepat":["mempercepatkan","meningkatkan kecepatan"],
+            "penting":["utama","krusial","esensial"], "mulai":["memulai","mengawali"], "selesai":["tuntas","complete"],
+            "meningkatkan":["menaikkan","memperbaiki"], "mengurangi":["menurunkan","meminimalkan"], "menggunakan":["pakai","memanfaatkan"]
         };
 
-        // ============================
-        // Utils
-        // ============================
-        const $ = sel => document.querySelector(sel);
-        const fmt = n => 'Rp' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        const uid = (len=8) => Math.random().toString(36).slice(2,2+len).toUpperCase();
+        // DOM
+        const tools = document.querySelectorAll('.nav button');
+        const toolCards = document.querySelectorAll('.tool');
+        const inputText = document.getElementById('inputText');
+        const charCount = document.getElementById('charCount');
+        const wordCount = document.getElementById('wordCount');
+        const sentCount = document.getElementById('sentCount');
+        const readTime = document.getElementById('readTime');
+        const topWordsBox = document.getElementById('topWords');
 
-        // ============================
-        // Render products & nominals
-        // ============================
-        function renderProducts(){
-            const el = $('#product-list');
-            el.innerHTML = '';
-            PRODUCTS.forEach(p=>{
-                const d = document.createElement('div');
-                d.className = 'product';
-                d.dataset.id = p.id;
-                d.innerHTML = `<div style="font-size:20px">${p.icon}</div><div style="font-weight:600;margin-top:6px">${p.name}</div><div class="muted" style="margin-top:6px">${p.type}</div>`;
-                d.addEventListener('click', ()=>selectProduct(p.id));
-                el.appendChild(d);
+        // navigation
+        document.getElementById('toolList').addEventListener('click', e=>{
+            if(e.target.tagName!=='BUTTON') return;
+            tools.forEach(b=>b.classList.remove('active'));
+            e.target.classList.add('active');
+            const tool = e.target.dataset.tool;
+            toolCards.forEach(c=>{
+                c.style.display = c.id === 'tool-' + tool ? '' : 'none';
             });
-        }
-
-        function selectProduct(id){
-            state.product = PRODUCTS.find(x=>x.id===id);
-            state.nominal = null;
-            // update UI
-            document.querySelectorAll('.product').forEach(el=>el.classList.toggle('selected', el.dataset.id===id));
-            $('#summary-product').textContent = state.product.name;
-            $('#label-target').textContent = state.product.type === 'pulsa' ? 'Masukkan Nomor HP' : 'Masukkan ID Pemain / Nomor';
-            renderNominals();
-            updateSummary();
-        }
-
-        function renderNominals(){
-            const el = $('#nominal-list');
-            el.innerHTML = '';
-            if(!state.product) return;
-            state.product.nominals.forEach(n=>{
-                const btn = document.createElement('div');
-                btn.className = 'nom';
-                btn.dataset.id = n.id;
-                btn.innerHTML = `<div style="font-weight:600">${n.label}</div><div class="muted">${fmt(n.price)}</div>`;
-                btn.addEventListener('click', ()=>{
-                    state.nominal = n;
-                    document.querySelectorAll('.nom').forEach(x=>x.classList.toggle('active', x.dataset.id===n.id));
-                    updateSummary();
-                });
-                el.appendChild(btn);
-            });
-        }
-
-        // ============================
-        // Summary & form actions
-        // ============================
-        function updateSummary(){
-            $('#summary-target').textContent = state.target || '—';
-            $('#summary-method').textContent = state.method || '—';
-            $('#summary-nominal').textContent = state.nominal ? state.nominal.label : '—';
-            $('#summary-price').textContent = state.nominal ? fmt(state.nominal.price) : 'Rp0';
-        }
-
-        function resetForm(){
-            state = {product:null,nominal:null,target:'',email:'',method:'bank'};
-            document.getElementById('product-list').querySelectorAll('.product').forEach(x=>x.classList.remove('selected'));
-            document.getElementById('nominal-list').innerHTML = '';
-            $('#target').value='';$('#email').value='';$('#method').value='bank';
-            $('#summary-product').textContent='—';$('#summary-target').textContent='—';$('#summary-nominal').textContent='—';$('#summary-price').textContent='Rp0';$('#summary-method').textContent='—';
-        }
-
-        // ============================
-        // Orders handling (localStorage)
-        // ============================
-        function getOrders(){return JSON.parse(localStorage.getItem('topup_orders')||'[]')}
-        function saveOrders(list){localStorage.setItem('topup_orders', JSON.stringify(list))}
-
-        function createOrder(){
-            // validation
-            if(!state.product){alert('Pilih produk terlebih dahulu.');return}
-            if(!state.nominal){alert('Pilih nominal.');return}
-            const targetVal = $('#target').value.trim();
-            if(!targetVal){alert('Masukkan target (nomor/ID).');return}
-            const emailVal = $('#email').value.trim();
-            if(!emailVal || !/^\S+@\S+\.\S+$/.test(emailVal)){ if(!confirm('Email tidak valid. Lanjut tanpa email?')) return; }
-            state.target = targetVal; state.email = emailVal; state.method = $('#method').value;
-
-            const orders = getOrders();
-            const newOrder = {
-                id: 'ORD' + uid(6),
-                productId: state.product.id,
-                productName: state.product.name,
-                nominalId: state.nominal.id,
-                nominalLabel: state.nominal.label,
-                price: state.nominal.price,
-                target: state.target,
-                email: state.email,
-                method: state.method,
-                status: 'pending',
-                createdAt: Date.now()
-            };
-            orders.unshift(newOrder);
-            saveOrders(orders);
-            renderOrders();
-            alert('Pesanan dibuat: ' + newOrder.id + '\\nSilakan cek daftar pesanan di kolom kanan.\n(Pembayaran disimulasikan)');
-            // optionally auto-open orders
-            renderAllOrdersPage();
-        }
-
-        function renderOrders(){
-            const list = getOrders().slice(0,6);
-            const el = $('#orders');
-            const empty = $('#orders-empty');
-            el.innerHTML = '';
-            if(list.length===0){ empty.style.display='block'; return }
-            empty.style.display='none';
-            list.forEach(o=>{
-                const d = document.createElement('div');
-                d.className = 'order';
-                d.innerHTML = `
-                    <div style="display:flex;justify-content:space-between;align-items:center">
-                        <div><div style="font-weight:700">${o.productName} — ${o.nominalLabel}</div><div class="muted">${o.target} • ${new Date(o.createdAt).toLocaleString()}</div></div>
-                        <div style="text-align:right">
-                            <div class="small">${fmt(o.price)}</div>
-                            <div style="margin-top:6px"><span class="status ${o.status==='pending'?'st-pending':o.status==='success'?'st-success':'st-cancel'}">${o.status.toUpperCase()}</span></div>
-                        </div>
-                    </div>
-                `;
-                el.appendChild(d);
-            });
-        }
-
-        function renderAllOrdersPage(){
-            const el = $('#all-orders');
-            const orders = getOrders();
-            el.innerHTML = orders.length ? orders.map(o=>`
-                <div class="order" style="display:flex;justify-content:space-between;align-items:center">
-                    <div>
-                        <div style="font-weight:700">${o.id} — ${o.productName} ${o.nominalLabel}</div>
-                        <div class="muted">${o.target} • ${new Date(o.createdAt).toLocaleString()} • ${o.method}</div>
-                        <div class="small">Email: ${o.email || '-'}</div>
-                    </div>
-                    <div style="text-align:right">
-                        <div style="font-weight:700">${fmt(o.price)}</div>
-                        <div style="margin-top:6px"><span class="status ${o.status==='pending'?'st-pending':o.status==='success'?'st-success':'st-cancel'}">${o.status.toUpperCase()}</span></div>
-                    </div>
-                </div>
-            `).join('') : '<div class="muted">Belum ada pesanan.</div>';
-        }
-
-        // ============================
-        // Admin actions (simulate fulfillment)
-        // ============================
-        function adminLogin(pass){
-            if(pass===ADMIN_PASSWORD){
-                $('#admin-actions').style.display='block';
-                $('#admin-pass').value='';
-                renderAdminList();
-            } else alert('Password salah.');
-        }
-
-        function renderAdminList(){
-            const el = $('#admin-list');
-            const orders = getOrders();
-            if(orders.length===0){ el.innerHTML = '<div class="muted">Tidak ada pesanan.</div>'; return }
-            el.innerHTML = orders.map(o=>`
-                <div class="order" style="display:flex;justify-content:space-between;align-items:center">
-                    <div>
-                        <div style="font-weight:700">${o.id} — ${o.productName} ${o.nominalLabel}</div>
-                        <div class="muted">${o.target} • ${new Date(o.createdAt).toLocaleString()} • ${o.method}</div>
-                    </div>
-                    <div style="text-align:right">
-                        <div style="font-weight:700">${fmt(o.price)}</div>
-                        <div style="margin-top:8px;display:flex;gap:6px;justify-content:flex-end">
-                            ${o.status==='pending' ? `<button class="btn" data-act="complete" data-id="${o.id}">Selesai</button>` : ''}
-                            ${o.status!=='cancel' ? `<button class="btn outline" data-act="cancel" data-id="${o.id}">Batalkan</button>` : ''}
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-            // bind actions
-            el.querySelectorAll('button[data-act]').forEach(b=>{
-                b.addEventListener('click', e=>{
-                    const id = b.dataset.id; const act = b.dataset.act;
-                    const orders = getOrders();
-                    const idx = orders.findIndex(x=>x.id===id);
-                    if(idx===-1) return alert('Pesanan tidak ditemukan');
-                    if(act==='complete'){ orders[idx].status='success'; alert('Pesanan ' + id + ' ditandai selesai.'); }
-                    if(act==='cancel'){ orders[idx].status='cancel'; alert('Pesanan ' + id + ' dibatalkan.'); }
-                    saveOrders(orders);
-                    renderAdminList(); renderOrders(); renderAllOrdersPage();
-                });
-            });
-        }
-
-        // ============================
-        // Event bindings
-        // ============================
-        document.addEventListener('DOMContentLoaded', ()=>{
-            renderProducts();
-            renderOrders();
-            renderAllOrdersPage();
-
-            // form bindings
-            $('#target').addEventListener('input', e=>{ state.target = e.target.value; updateSummary(); });
-            $('#email').addEventListener('input', e=>{ state.email = e.target.value; updateSummary(); });
-            $('#method').addEventListener('change', e=>{ state.method = e.target.value; updateSummary(); });
-
-            $('#btn-buy').addEventListener('click', createOrder);
-            $('#btn-reset').addEventListener('click', ()=>{ if(confirm('Reset semua pilihan?')) resetForm(); });
-
-            // nav
-            $('#nav-home').addEventListener('click', e=>{ e.preventDefault(); $('#shop').style.display='block'; $('#page-orders').style.display='none'; $('#page-admin').style.display='none'; window.scrollTo({top:0,behavior:'smooth'})});
-            $('#nav-orders').addEventListener('click', e=>{ e.preventDefault(); $('#shop').style.display='none'; $('#page-orders').style.display='block'; $('#page-admin').style.display='none'; renderAllOrdersPage(); window.scrollTo({top:0,behavior:'smooth'})});
-            $('#nav-admin').addEventListener('click', e=>{ e.preventDefault(); $('#shop').style.display='none'; $('#page-orders').style.display='none'; $('#page-admin').style.display='block'; window.scrollTo({top:0,behavior:'smooth'})});
-
-            // admin login
-            $('#btn-admin-login').addEventListener('click', ()=>adminLogin($('#admin-pass').value));
-
-            // load sample selection
-            selectProduct(PRODUCTS[0].id);
         });
+
+        // live counters
+        inputText.addEventListener('input', updateStats);
+        function updateStats(){
+            const txt = inputText.value || '';
+            charCount.textContent = txt.length + ' char';
+            const words = tokenizeWords(txt);
+            wordCount.textContent = words.length + ' kata';
+            const sents = splitSentences(txt).length;
+            sentCount.textContent = sents + ' kalimat';
+            const mins = Math.max(1, Math.round(words.length / 200));
+            readTime.textContent = mins + ' mnt';
+            // top words
+            const freq = frequencyMap(words, document.getElementById('lang').value);
+            const top = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,8);
+            topWordsBox.innerHTML = top.map(t => `<span class="keyword">${escapeHtml(t[0])} (${t[1]})</span>`).join('');
+        }
+        updateStats();
+
+        // helpers
+        function tokenizeWords(txt){
+            return (txt||'').toLowerCase().match(/[a-z\u00C0-\u024F\u1E00-\u1EFF0-9]+/gi) || [];
+        }
+        function splitSentences(txt){
+            if(!txt) return [];
+            // simple sentence split
+            return txt.replace(/\n/g,' ').split(/(?<=[.!?])\s+/).filter(s=>s.trim().length);
+        }
+        function frequencyMap(words, lang='id'){
+            const map = {};
+            const sw = (lang==='en')? englishStop : stopwords;
+            words.forEach(w=>{
+                if(sw.has(w)) return;
+                if(w.length<=2) return;
+                map[w] = (map[w]||0) + 1;
+            });
+            return map;
+        }
+        function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+        // Analyzer tool
+        function runTool(){
+            updateStats();
+            analyzer();
+            summarize();
+            extractKeywords();
+            // others stay manual
+        }
+        function analyzer(){
+            const txt = inputText.value || '';
+            const words = tokenizeWords(txt);
+            const sents = splitSentences(txt);
+            const freq = frequencyMap(words, document.getElementById('lang').value);
+            const top = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,10);
+            const avgWords = words.length / Math.max(1, sents.length);
+            const flesch = fleschKincaid(words.length, sents.length, syllableCount(txt));
+            document.getElementById('analyzerOutput').textContent =
+                `Kata: ${words.length}\nKalimat: ${sents.length}\nRata-rata kata per kalimat: ${avgWords.toFixed(1)}\nSkor keterbacaan (pendek): ${flesch.toFixed(1)}`;
+            document.getElementById('analyzerMeta').innerHTML = `Top kata: ${top.slice(0,6).map(t=>escapeHtml(t[0])).join(', ') || '—'}`;
+        }
+
+        // approximate syllable count (very rough)
+        function syllableCount(text){
+            // heuristic: count vowel groups
+            const matches = (text || '').toLowerCase().match(/[aiueoy]{1,2}/g);
+            return Math.max(1, matches ? matches.length : Math.ceil((text||'').length/4));
+        }
+        function fleschKincaid(words, sentences, syllables){
+            // simplified readability (not exact)
+            const wps = words / Math.max(1, sentences);
+            const spw = syllables / Math.max(1, words);
+            // return a pseudo-score
+            return 206.835 - 1.015 * wps - 84.6 * spw;
+        }
+
+        // Summarizer (extractive)
+        function summarize(){
+            const txt = inputText.value || '';
+            const sentences = splitSentences(txt);
+            if(!sentences.length){
+                document.getElementById('summaryOutput').textContent = 'Masukkan teks yang cukup panjang untuk merangkum.';
+                return;
+            }
+            const words = tokenizeWords(txt);
+            const freq = frequencyMap(words, document.getElementById('lang').value);
+            const scores = sentences.map(s=>{
+                const ws = tokenizeWords(s);
+                let sc = 0;
+                ws.forEach(w=> sc += (freq[w]||0));
+                // boost short sentences slightly
+                sc = sc / Math.max(1, ws.length);
+                return sc;
+            });
+            const len = parseInt(document.getElementById('summaryLength').value || 2);
+            // select top N sentences with original order
+            const idx = scores
+                .map((s,i)=>({s,i}))
+                .sort((a,b)=>b.s-a.s)
+                .slice(0,len)
+                .map(x=>x.i)
+                .sort((a,b)=>a-b);
+            const summary = idx.map(i=>sentences[i]).join(' ');
+            document.getElementById('summaryOutput').textContent = summary || 'Tidak dapat membuat ringkasan.';
+        }
+
+        // Keywords
+        function extractKeywords(){
+            const txt = inputText.value || '';
+            const words = tokenizeWords(txt);
+            const freq = frequencyMap(words, document.getElementById('lang').value);
+            const k = Math.max(3, Math.min(40, parseInt(document.getElementById('kwCount').value || 10)));
+            const top = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,k);
+            const out = top.map(t=>`${t[0]} (${t[1]})`).join(', ');
+            document.getElementById('keywordsOutput').textContent = out || 'Tidak ada kata penting ditemukan.';
+        }
+
+        // Paraphrase (simple synonyms + clause shuffle)
+        function paraphrase(variant = 0){
+            const txt = inputText.value || '';
+            if(!txt.trim()){ document.getElementById('paraphraseOutput').textContent = 'Masukkan teks untuk parafrase.'; return; }
+            const sentences = splitSentences(txt);
+            const mapped = sentences.map(s=>{
+                return s.split(/\s+/).map(w=>{
+                    const key = w.toLowerCase().replace(/[^a-z\u00C0-\u024F]/gi,'');
+                    if(smallSynonyms[key]){
+                        const arr = smallSynonyms[key];
+                        const pick = arr[Math.floor(Math.random()*arr.length)];
+                        // preserve capitalization
+                        if(w[0] && w[0] === w[0].toUpperCase()) return capitalize(pick);
+                        return pick;
+                    }
+                    return w;
+                }).join(' ');
+            });
+            if(variant===1){
+                // reverse sentence order
+                mapped.reverse();
+            } else if(variant===2){
+                // rotate sentences
+                mapped.push(mapped.shift());
+            }
+            const res = mapped.join(' ');
+            document.getElementById('paraphraseOutput').textContent = res;
+        }
+        function capitalize(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+        // Sentiment (simple lexicon)
+        const posLex = new Set(["baik","bagus","senang","senang","gembira","cinta","suka","positif","puas","hebat","keren","unggul","mantap","luar biasa","happy","good","great","love","like","excellent"]);
+        const negLex = new Set(["buruk","jelek","benci","sedih","kecewa","masalah","gagal","jelek","jelek","minus","negatif","hate","bad","angry","terrible","poor"]);
+        function analyzeSentiment(){
+            const txt = inputText.value || '';
+            const words = tokenizeWords(txt);
+            let score = 0;
+            const posFound = [], negFound = [];
+            words.forEach(w=>{
+                if(posLex.has(w)) { score++; posFound.push(w); }
+                if(negLex.has(w)) { score--; negFound.push(w); }
+            });
+            const tone = score > 0 ? "Positif" : score < 0 ? "Negatif" : "Netral";
+            const emoji = score > 1 ? "😊" : score < -1 ? "😞" : "😐";
+            document.getElementById('sentimentOutput').textContent = `Skor: ${score} — ${tone} ${emoji}\nPositif: ${[...new Set(posFound)].join(', ') || '-'}\nNegatif: ${[...new Set(negFound)].join(', ') || '-'}`;
+        }
+
+        // Grammar checking (simple)
+        function grammarCheck(){
+            const txt = inputText.value || '';
+            if(!txt.trim()){ document.getElementById('grammarOutput').textContent = 'Masukkan teks untuk diperiksa.'; return; }
+            const issues = [];
+            // duplicated words: "the the" or "dan dan"
+            const tokens = txt.split(/\s+/);
+            for(let i=1;i<tokens.length;i++){
+                if(tokens[i].toLowerCase() === tokens[i-1].toLowerCase()){
+                    issues.push({type:'Duplikasi kata', pos:i-1, text:`"${tokens[i-1]} ${tokens[i]}"`});
+                }
+            }
+            // sentence capitalization
+            const sentences = splitSentences(txt);
+            sentences.forEach((s,idx)=>{
+                const first = s.trim()[0];
+                if(first && first === first.toLowerCase()){
+                    issues.push({type:'Kapitalisasi', pos:idx, text:`Kalimat nomor ${idx+1} sebaiknya diawali huruf kapital`});
+                }
+            });
+            // trailing spaces before punctuation
+            const trailing = (txt.match(/\s+[.!?,;:]/g) || []).length;
+            if(trailing) issues.push({type:'Spasi sebelum tanda baca', text:`Terdapat ${trailing} spasi sebelum tanda baca.`});
+            // too long sentence
+            sentences.forEach((s,idx)=>{
+                const w = s.split(/\s+/).length;
+                if(w > 40) issues.push({type:'Kalimat panjang', pos:idx, text:`Kalimat ${idx+1} panjang (${w} kata). Pertimbangkan memecah.`});
+            });
+
+            if(!issues.length) document.getElementById('grammarOutput').textContent = 'Tidak ditemukan masalah grammar dasar.';
+            else document.getElementById('grammarOutput').textContent = issues.map(i=>`${i.type}: ${i.text}`).join('\n');
+        }
+        function applyGrammarFix(){
+            // very simple fixes: remove duplicated adjacent words and fix capitalization of sentences
+            let txt = inputText.value || '';
+            txt = txt.replace(/\b([a-z\u00C0-\u024F]+)\s+\1\b/gi, '$1'); // dedupe adjacent
+            // capitalize after sentence end
+            txt = txt.replace(/(?:^|[.!?]\s+)([a-z\u00C0-\u024F])/g, (m,p1) => m.slice(0,-1) + p1.toUpperCase());
+            inputText.value = txt;
+            updateStats();
+            grammarCheck();
+        }
+
+        // Title generator
+        function generateTitles(){
+            const txt = inputText.value || '';
+            const words = tokenizeWords(txt);
+            const freq = frequencyMap(words, document.getElementById('lang').value);
+            const top = Object.keys(freq).slice(0,4).map(t=>capitalize(t));
+            const tone = document.getElementById('titleTone').value;
+            const base = top.join(' ');
+            const titles = [];
+            if(tone === 'clickbait'){
+                titles.push(`Kamu Tidak Akan Percaya: ${base} akan Mengubah Cara Anda!`);
+                titles.push(`${base} — 7 Hal yang Harus Kamu Ketahui Sekarang`);
+                titles.push(`Rahasia ${top[0] || 'Ini'} yang Jarang Diketahui Orang`);
+            } else if(tone === 'formal'){
+                titles.push(`Analisis Mengenai ${base}`);
+                titles.push(`Panduan Lengkap: ${base}`);
+                titles.push(`Ringkasan dan Implikasi ${top[0] || ''}`);
+            } else if(tone === 'creative'){
+                titles.push(`${top[0] || 'Inti'}: Menyatukan ${top.slice(1).join(', ')}`);
+                titles.push(`Menjelajah ${base} — Perspektif Baru`);
+                titles.push(`Dari Ide ke Realita: ${top[0] || 'Topik'}`);
+            } else {
+                titles.push(`${base} — Ringkasan & Inti`);
+                titles.push(`10 Poin Utama tentang ${top[0] || 'Topik'}`);
+                titles.push(`Apa yang Perlu Anda Ketahui tentang ${top[0] || 'Topik'}`);
+            }
+            document.getElementById('titlesOutput').textContent = titles.join('\n\n');
+        }
+
+        // Chat Q&A (rule-based)
+        function chatAnswer(){
+            const q = (document.getElementById('chatQuestion').value || '').toLowerCase().trim();
+            const txt = inputText.value || '';
+            if(!q) { document.getElementById('chatOutput').textContent = 'Tulis pertanyaan terlebih dahulu.'; return; }
+            const sents = splitSentences(txt);
+            if(!txt) { document.getElementById('chatOutput').textContent = 'Masukkan teks terlebih dahulu agar saya bisa menjawab tentang isi teks.'; return; }
+
+            if(q.includes('ringkas') || q.includes('intisari') || q.includes('ringkasan')){
+                summarize();
+                document.getElementById('chatOutput').textContent = document.getElementById('summaryOutput').textContent;
+                return;
+            }
+            if(q.match(/(paragraf|kalimat)\s*(\d+)/)){
+                const m = q.match(/(paragraf|kalimat)\s*(\d+)/);
+                const i = parseInt(m[2],10)-1;
+                if(sents[i]) {
+                    document.getElementById('chatOutput').textContent = `Kalimat ${i+1}: ${sents[i]}`;
+                } else document.getElementById('chatOutput').textContent = 'Kalimat tidak ditemukan.';
+                return;
+            }
+            if(q.includes('tema') || q.includes('topik') || q.includes('inti')){
+                // guess topic by top keywords
+                const words = tokenizeWords(txt);
+                const freq = frequencyMap(words, document.getElementById('lang').value);
+                const top = Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,5).map(t=>t[0]);
+                document.getElementById('chatOutput').textContent = `Topik yang muncul: ${top.join(', ') || '-'}`;
+                return;
+            }
+            // fallback: search for sentence containing keyword
+            const keywords = tokenizeWords(q).filter(w=>w.length>3);
+            for(let s of sents){
+                for(let k of keywords){
+                    if(s.toLowerCase().includes(k)){
+                        document.getElementById('chatOutput').textContent = `Ditemukan konteks: ${s}`;
+                        return;
+                    }
+                }
+            }
+            document.getElementById('chatOutput').textContent = "Maaf, saya belum mengerti. Coba tanyakan 'Ringkas', 'Inti', atau 'Kalimat 2'.";
+        }
+
+        // Notes: localStorage
+        function saveNote(){
+            const title = (document.getElementById('noteTitle').value || 'Untitled').trim();
+            const content = inputText.value || '';
+            if(!content) { document.getElementById('notesOutput').textContent = 'Masukkan teks untuk disimpan.'; return; }
+            const notes = JSON.parse(localStorage.getItem('ai_notes_v1')||'{}');
+            notes[title] = {content, ts: Date.now()};
+            localStorage.setItem('ai_notes_v1', JSON.stringify(notes));
+            renderNotes();
+        }
+        function renderNotes(){
+            const notes = JSON.parse(localStorage.getItem('ai_notes_v1')||'{}');
+            const entries = Object.entries(notes).sort((a,b)=>b[1].ts - a[1].ts);
+            if(!entries.length) { document.getElementById('notesOutput').textContent = 'Belum ada catatan.'; return; }
+            document.getElementById('notesOutput').innerHTML = entries.map(e=>{
+                const t = new Date(e[1].ts).toLocaleString();
+                return `<div style="margin-bottom:8px"><strong>${escapeHtml(e[0])}</strong> <div class="meta">${t}</div><div style="margin-top:6px;white-space:pre-wrap">${escapeHtml(e[1].content)}</div></div>`;
+            }).join('');
+        }
+        renderNotes();
+
+        // Utility actions
+        function copyOutput(){
+            // prefer selected tool output or summaryOutput, analyzerOutput etc.
+            const visible = Array.from(toolCards).find(c=>c.style.display !== 'none');
+            const outEl = visible ? visible.querySelector('.output') : null;
+            const text = outEl ? outEl.textContent : (inputText.value || '');
+            navigator.clipboard?.writeText(text).then(()=>alert('Teks disalin ke clipboard.'), ()=>alert('Gagal menyalin.'));
+        }
+        function downloadOutput(){
+            const visible = Array.from(toolCards).find(c=>c.style.display !== 'none');
+            const outEl = visible ? visible.querySelector('.output') : null;
+            const text = outEl ? outEl.textContent : (inputText.value || '');
+            const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url; a.download = 'output.txt';
+            document.body.appendChild(a); a.click(); a.remove();
+            URL.revokeObjectURL(url);
+        }
+        function clearAll(){
+            if(confirm('Kosongkan teks dan hasil?')) {
+                inputText.value = '';
+                document.querySelectorAll('.output').forEach(o=>o.textContent = '');
+                updateStats();
+            }
+        }
+
+        // small helpers
+        function loadExample(){
+            const example = `Perusahaan teknologi memutuskan untuk meningkatkan fokus pada keberlanjutan dan efisiensi energi. Inisiatif ini mencakup penggunaan sumber daya terbarukan, pengurangan emisi, serta pengembangan produk yang lebih hemat energi. Kebijakan baru juga mendorong kolaborasi antar tim untuk mencapai target pengurangan karbon dalam 5 tahun ke depan. Implementasi awal akan diuji pada dua fasilitas produksi sebelum skalasi ke seluruh jaringan.`;
+            inputText.value = example;
+            updateStats();
+        }
+
+        // initialize some outputs
+        document.getElementById('analyzerOutput').textContent = 'Jalankan alat untuk melihat hasil.';
+        document.getElementById('summaryOutput').textContent = 'Ringkasan akan muncul di sini.';
+        document.getElementById('keywordsOutput').textContent = 'Tidak ada keyword.';
+        document.getElementById('paraphraseOutput').textContent = 'Hasil parafrase akan muncul di sini.';
+        document.getElementById('sentimentOutput').textContent = 'Klik Analisis untuk melihat hasil.';
+        document.getElementById('grammarOutput').textContent = 'Hasil pengecekan akan muncul di sini.';
+        document.getElementById('titlesOutput').textContent = 'Judul akan muncul di sini.';
+        document.getElementById('chatOutput').textContent = 'Jawaban akan muncul di sini.';
     </script>
 </body>
-</html>
+</html></div></select></div></select></div></section></select></div></section></div></nav></div>
