@@ -1,3 +1,7 @@
-document.getElementById("nama").innerText = "nanda";
-document.getElementById("kelas").innerText = "XI RPL";
-document.getElementById("absen").innerText = "07";
+var nama = "nanda";
+var kelas = "XI RPL";
+var absen = "07";
+
+document.getElementById("nama").innerText = `${nama}`;
+document.getElementById("kelas").innerText = `${kelas}`;
+document.getElementById("absen").innerText = `${absen}`;
