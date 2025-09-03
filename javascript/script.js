@@ -1,7 +1,7 @@
-var nama = "nanda";
-var kelas = "XI RPL";
-var absen = "07";
+const r = 30;
+const keliling = 2 * Math.PI * r;
+const luas = Math.PI * r * r;
 
-document.getElementById("nama").innerText = `${nama}`;
-document.getElementById("kelas").innerText = `${kelas}`;
-document.getElementById("absen").innerText = `${absen}`;
+document.getElementById('radius').textContent = `Jari-jari: ${r}`;
+document.getElementById('keliling').textContent = `Keliling: ${keliling.toFixed(2)}`;
+document.getElementById('luas').textContent = `Luas: ${luas.toFixed(2)}`;
