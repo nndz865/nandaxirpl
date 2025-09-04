@@ -1,32 +1,58 @@
-<HTML>
-<HEAD><TITLE>Memasukkan Bilangan</TITLE></HEAD>
-<BODY>
-<P><SCRIPT language="JavaScript">
-<!--
-function jumlah()
-{
-    var bil1 = parseFloat(document.fform.bilangan1.value);
-    if (isNaN(bil1))
-        bil1 = 0.0;
-    var bil2 = parseFloat(document.fform.bilangan2.value);
-    if (isNaN(bil2))
-        bil2 = 0.0;
-    var hasil = bil1 + bil2;
-    alert("Hasil Penjumlahan = " + hasil);
-}
-//-->
-</SCRIPT></P>
+<html>
+    <head>
+        <title>Memasukkan Bilangan</title>
+    </head>
+    <body>
+        <p><script language="JavaScript">
+            <!--
+            function hitung(op)
+            {
+                var bill = parseFloat(document.fform.bilangan1.value);
+                if (isNaN(bill)) bill = 0.0;
+                var bil2 = parseFloat(document.fform.bilangan2.value);
+                if (isNaN(bil2)) bil2 = 0.0;
 
-<FORM NAME="fform">
-<H1><BR>Memasukkan Data Lewat Keyboard</H1>
-<PRE>
-Bilangan Pertama : <input type="text" size="11" name="bilangan1">
-Bilangan Kedua   : <input type="text" size="11" name="bilangan2">
-</PRE>
+                var hasil, nama;
+                switch(op){
+                    case 'tambah':
+                        hasil = bill + bil2;
+                        nama = 'Penjumlahan';
+                        break;
+                    case 'kurang':
+                        hasil = bill - bil2;
+                        nama = 'Pengurangan';
+                        break;
+                    case 'kali':
+                        hasil = bill * bil2;
+                        nama = 'Perkalian';
+                        break;
+                    case 'bagi':
+                        nama = 'Pembagian';
+                        if (bil2 === 0) {
+                            alert('Error: Pembagian dengan nol tidak diperbolehkan.');
+                            return;
+                        }
+                        hasil = bill / bil2;
+                        break;
+                    default:
+                        alert('Operasi tidak dikenali.');
+                        return;
+                }
 
-<P>
-<INPUT TYPE="button" value="Jumlahkan" onclick="jumlah()">
-<INPUT TYPE="reset" value="Ulang">
-</FORM>
-</BODY>
-</HTML>
+                alert(nama + ' = ' + hasil);
+            }
+         //-->
+        </script></p>
+        <form name ="fform">
+            <h1><br>Memasukkan data lewat keyboard</h1>
+            <PRE>
+                Bilangan pertama :<input type="text" size="11" name="bilangan1">
+                Bilangan kedua   :<input type="text" size="11" name="bilangan2">
+            </PRE>
+            <p>
+                <input type="button" value="Jumlahkan" onclick="hitung('tambah')">
+                <input type="button" value="Kurangkan" onclick="hitung('kurang')">
+                <input type="button" value="Kalikan" onclick="hitung('kali')">
+                <input type="button" value="Bagikan" onclick="hitung('bagi')">
+                <input type="reset" value="Ulang">
+        </form>
