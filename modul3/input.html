@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Data Mahasiswa</title>
+</head>
+<body bgcolor="white"> 
+  <h2 align="center">Data Mahasiswa <br> Universitas Komputer Indonesia</h2>
+  <hr width="100%">
+
+  <form name="fform">
+    <table cellpadding="5">
+      <tr>
+        <td>NIM</td>
+        <td><input type="text" size="15" name="nim"></td>
+      </tr>
+      <tr>
+        <td>Nama</td>
+        <td><input type="text" size="25" name="nama"></td>
+      </tr>
+      <tr>
+        <td>Jenis Kelamin</td>
+        <td>
+          <input type="radio" name="jk" value="Laki-laki"> Laki-laki
+          <input type="radio" name="jk" value="Perempuan"> Perempuan
+        </td>
+      </tr>
+      <tr>
+        <td>Agama</td>
+        <td>
+          <select name="agama">
+            <option value="Islam">Islam</option>
+            <option value="Kristen">Kristen</option>
+            <option value="Katolik">Katolik</option>
+            <option value="Hindu">Hindu</option>
+            <option value="Buddha">Buddha</option>
+            <option value="Konghucu">Konghucu</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Status</td>
+        <td>
+          <input type="radio" name="status" value="Menikah"> Menikah
+          <input type="radio" name="status" value="Belum Menikah"> Belum Menikah
+        </td>
+      </tr>
+      <tr>
+        <td>Jurusan</td>
+        <td>
+          <select name="jurusan">
+            <option value="Teknik Informatika">Teknik Informatika</option>
+            <option value="Manajemen Informatika">Manajemen Informatika</option>
+            <option value="Teknik Komputer">Teknik Komputer</option>
+            <option value="Teknik Industri">Teknik Industri</option>
+            <option value="Teknik Elektro">Teknik Elektro</option>
+            <option value="Teknik Sipil">Teknik Sipil</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Komentar</td>
+        <td><textarea name="komentar" rows="3" cols="30"></textarea></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input type="button" value="KIRIM" onclick="tampil()">
+          <input type="reset" value="RESET">
+        </td>
+      </tr>
+    </table>
+
+    <hr width="100%">
+    <h3>Output </h3>
+    <table cellpadding="5">
+      <tr>
+        <td>NIM</td>
+        <td><input type="text" size="15" name="onim" readonly></td>
+      </tr>
+      <tr>
+        <td>Nama</td>
+        <td><input type="text" size="25" name="onama" readonly></td>
+      </tr>
+      <tr>
+        <td>Jenis Kelamin</td>
+        <td><input type="text" size="15" name="ojk" readonly></td>
+      </tr>
+      <tr>
+        <td>Agama</td>
+        <td><input type="text" size="15" name="oagama" readonly></td>
+      </tr>
+      <tr>
+        <td>Status</td>
+        <td><input type="text" size="20" name="ostatus" readonly></td>
+      </tr>
+      <tr>
+        <td>Jurusan</td>
+        <td><input type="text" size="25" name="ojurusan" readonly></td>
+      </tr>
+      <tr>
+        <td>Komentar</td>
+        <td><textarea name="okomentar" rows="3" cols="30" readonly></textarea></td>
+      </tr>
+    </table>
+  </form>
+
+  <script>
+    function tampil() {
+      var f = document.fform;
+
+      var nim = f.nim.value;
+      var nama = f.nama.value;
+      var jk = "";
+      if (f.jk[0].checked) jk = f.jk[0].value;
+      if (f.jk[1].checked) jk = f.jk[1].value;
+
+      var agama = f.agama.value;
+      var status = "";
+      if (f.status[0].checked) status = f.status[0].value;
+      if (f.status[1].checked) status = f.status[1].value;
+
+      var jurusan = f.jurusan.value;
+      var komentar = f.komentar.value;
+
+      f.onim.value = nim;
+      f.onama.value = nama;
+      f.ojk.value = jk;
+      f.oagama.value = agama;
+      f.ostatus.value = status;
+      f.ojurusan.value = jurusan;
+      f.okomentar.value = komentar;
+    }
+  </script>
+</body>
+</html>
