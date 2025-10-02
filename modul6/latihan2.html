@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mencari Akar Persamaan Kuadrat</title>
+  <script>
+    function hitungAkar() {
+      var a = parseFloat(document.getElementById("a").value);
+      var b = parseFloat(document.getElementById("b").value);
+      var c = parseFloat(document.getElementById("c").value);
+
+      var D = Math.pow(b, 2) - 4 * a * c; // diskriminan
+      var hasil = "";
+
+      if (D > 0) {
+        var x1 = (-b + Math.sqrt(D)) / (2 * a);
+        var x2 = (-b - Math.sqrt(D)) / (2 * a);
+        hasil = "Akar-akar real berbeda: x1 = " + x1 + ", x2 = " + x2;
+      } else if (D == 0) {
+        var x = -b / (2 * a);
+        hasil = "Akar real sama: x = " + x;
+      } else {
+        hasil = "Tidak ada akar real (akar imajiner)";
+      }
+
+      document.getElementById("output").innerHTML = hasil;
+    }
+  </script>
+</head>
+<body>
+  <h3 align="center">Menghitung Akar Persamaan Kuadrat</h3>
+  <form>
+    <table align="center" border="1" cellpadding="5">
+      <tr><td>a</td><td><input type="text" id="a"></td></tr>
+      <tr><td>b</td><td><input type="text" id="b"></td></tr>
+      <tr><td>c</td><td><input type="text" id="c"></td></tr>
+      <tr>
+        <td colspan="2" align="center">
+          <input type="button" value="Hitung" onclick="hitungAkar()">
+        </td>
+      </tr>
+    </table>
+  </form>
+  <div align="center">
+    <h4>Hasil:</h4>
+    <div id="output"></div>
+  </div>
+</body>
+</html>
