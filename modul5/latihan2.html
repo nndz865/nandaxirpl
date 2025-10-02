@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PERHITUNGAN BUNGA</title>
+  <script>
+    function hitungBunga() {
+      var saldo = parseFloat(document.getElementById("saldo").value);
+      var bunga = parseFloat(document.getElementById("bunga").value);
+      var waktu = parseInt(document.getElementById("waktu").value);
+
+      var hasil = "";
+      var saldoAkhir = saldo;
+
+      for (var i = 1; i <= waktu; i++) {
+        saldoAkhir = saldoAkhir + (saldoAkhir * bunga / 100);
+        hasil += "Saldo Bulan " + i + " = Rp. " + saldoAkhir.toFixed(0) + "<br>";
+      }
+
+      document.getElementById("output").innerHTML = hasil;
+    }
+
+    function resetForm() {
+      document.getElementById("formBunga").reset();
+      document.getElementById("output").innerHTML = "";
+    }
+  </script>
+</head>
+<body>
+  <h3 align="center">PERHITUNGAN BUNGA</h3>
+  <form id="formBunga">
+    <table border="1" align="center" cellpadding="5">
+      <tr>
+        <td>Saldo</td>
+        <td><input type="text" id="saldo"></td>
+      </tr>
+      <tr>
+        <td>Bunga</td>
+        <td><input type="text" id="bunga"> %</td>
+      </tr>
+      <tr>
+        <td>Waktu</td>
+        <td><input type="text" id="waktu"> Bulan</td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">
+          <input type="button" value="Hitung" onclick="hitungBunga()">
+          <input type="button" value="Reset" onclick="resetForm()">
+        </td>
+      </tr>
+    </table>
+  </form>
+  <div align="center">
+    <h4>Hasil Perhitungan :</h4>
+    <div id="output"></div>
+  </div>
+</body>
+</html>
