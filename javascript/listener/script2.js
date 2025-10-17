@@ -5,7 +5,7 @@ document.body.addEventListener('click',  function (e)  {
     return; 
     const val = e.target.textContent;
      if(val === '=') { 
-        try { expr = eval(expr); } 
-     catch { expr = 'Error'; } 
+        try { expr = eval(expr); }
+     catch { expr = 'error'; }
     } else if(val === 'C') { expr = ''; }
      else { expr += val; } display.value = expr; });
