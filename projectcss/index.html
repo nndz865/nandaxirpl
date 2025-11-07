@@ -1,0 +1,109 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.header {
+    background-color: red;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+}
+
+.header .kiri {
+    display: grid;
+    grid-template-rows: 2fr 2fr;
+    background-color: green;
+}
+
+.header .tengah {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    background-color: white;
+}
+
+.header .kanan {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    background-color: blue;
+}
+
+.header .kiri .atas {
+    background-color: purple;
+}
+
+.header .kiri .bawah {
+    background-color: pink;
+}
+
+.header .tengah .atas {
+    background-color: brown;
+}
+
+.header .tengah .tengah {
+    background-color: gray;
+}
+
+.header .tengah .bawah {
+    background-color: black;
+}
+
+.header .kanan .pojokKiri {
+    background-color: cyan;
+}
+
+.header .kanan .kiri {
+    background-color: magenta;
+}
+
+.header .kanan .kanan {
+    background-color: lime;
+}
+
+.header .kanan .pojokKanan {
+    background-color: olive;
+}
+
+.content {
+    background-color: orange;
+    display: grid;
+    place-items: center;
+}
+
+.footer {
+    background-color: yellow;
+    display: grid;
+    place-items: center;
+}
+</style>
+
+<body>
+    <div class="header">
+        <div class="kiri">
+            <div class="atas"></div>
+            <div class="bawah"></div>
+        </div>
+        <div class="tengah">
+            <div class="atas"></div>
+            <div class="tengah"></div>
+            <div class="bawah"></div>
+        </div>
+        <div class="kanan">
+            <div class="pojokKiri"></div>
+            <div class="kiri"></div>
+            <div class="kanan"></div>
+            <div class="pojokKanan"></div>
+        </div>
+    </div>
+    <div class="content">ini bagian content</div>
+    <div class="footer">ini bagian footer</div>
+</body>
+</html>
