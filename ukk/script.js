@@ -17,16 +17,13 @@ tambah.addEventListener('click', () => {
     const kolom4 = baris.insertCell(3);
     const kolom5 = baris.insertCell(4);
 
-    const hargaNum = Number(harga.value) || 0;
-    const jumlahNum = Number(jumlahBarang.value) || 0;
-    const diskonPercent = Number(diskonInput.value) || 0;
-
-    const totalHarga = hargaNum * jumlahNum;
-    const discounted = Math.round((totalHarga * (1 - Math.min(Math.max(diskonPercent, 0), 100) / 100)) * 100) / 100;
+    
+    let totalHarga = Number(harga,value) * Number(jumlahBarang.value);
+    let discounted = Number((totalHarga * (1 - Number.min(Number.max(diskonPercent, 0), 100) / 100)) * 100) / 100;
 
     kolom1.textContent = nama.value || '-';
-    kolom2.textContent = hargaNum;
-    kolom3.textContent = jumlahNum;
+    kolom2.textContent = harga.value;
+    kolom3.textContent = jumlahBarang.value;
     kolom4.textContent = diskonPercent + ' %';
     kolom5.textContent = discounted;
 
