@@ -1,43 +1,37 @@
-// element references
-const tambah = document.getElementById('tambah');
-const clear = document.getElementById('clear');
-const nama = document.getElementById('nama');
-const harga = document.getElementById('harga');
-const jumlahBarang = document.getElementById('jumlahBarang');
-const diskonInput = document.getElementById('diskon');
+let tombol = document.getElementById("tombol");
+let clear = document.getElementById("clear");
+let nama = document.getElementById("nama");
+let harga = document.getElementById("harga");
+let jumlahBarang = document.getElementById("jumlahBarang");
+let diskon = document.getElementById("diskon (%)");
+let totalSetelahDiskon = document.getElementById("total");
 
-tambah.addEventListener('click', () => {
-    const tabel = document.getElementById('tabelBarang');
+tambah.addEventListener("click", () => {
+    let tabel = document.getElementById("tabelBarang");
 
-    const baris = tabel.insertRow();
+    let baris = tabel.insertRow();
 
-    const kolom1 = baris.insertCell(0);
-    const kolom2 = baris.insertCell(1);
-    const kolom3 = baris.insertCell(2);
-    const kolom4 = baris.insertCell(3);
-    const kolom5 = baris.insertCell(4);
+    let kolom1 = baris.insertCell(0);
+    let kolom2 = baris.insertCell(1);
+    let kolom3 = baris.insertCell(2);
+    let kolom4 = baris.insertCell(3);
+    let kolom5 = baris.insertCell(4);
 
-    
-    let totalHarga = Number(harga,value) * Number(jumlahBarang.value);
-    let discounted = Number((totalHarga * (1 - Number.min(Number.max(diskonPercent, 0), 100) / 100)) * 100) / 100;
+    let totalHarga = Number(harga.value) * Number(jumlahBarang.value);
+    let hargaDiskon = totalHarga - (totalHarga * Number(diskon.value) / 100);
 
-    kolom1.textContent = nama.value || '-';
+    kolom1.textContent = nama.value;
     kolom2.textContent = harga.value;
     kolom3.textContent = jumlahBarang.value;
-    kolom4.textContent = diskonPercent + ' %';
-    kolom5.textContent = discounted;
+    kolom4.textContent = totalHarga;
+    kolom5.textContent = hargaDiskon;
 
-    nama.value = '';
-    harga.value = '';
-    jumlahBarang.value = '';
+    
 });
 
-clear.addEventListener('click', () => {
-    nama.value = '';
-    harga.value = '';
-    jumlahBarang.value = '';
-    diskonInput.value = '';
-
-    const tabel = document.getElementById('tabelBarang');
-    while (tabel.rows.length > 1) tabel.deleteRow(1);
+clear.addEventListener("click", () => {
+    nama.value = "";
+    harga.value = "";
+    jumlahBarang.value = "";
+    diskon.value = "";
 });

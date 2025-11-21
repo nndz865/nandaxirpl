@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Aplikasi Kasir JavaScript</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #999;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background: #eee;
+        }
+
+        .box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            width: 350px;
+        }
+
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Aplikasi Kasir JavaScript</h1>
+
+    <div class="box">
+        <label>Pilih Barang:</label><br>
+        <select id="pilihBarang"></select>
+
+        <br><br>
+
+        <label>Jumlah Beli:</label><br>
+        <input type="number" id="jumlahBeli" min="1" value="1">
+
+        <br><br>
+        <button onclick="tambahKeranjang()">Tambah</button>
+    </div>
+
+    <h2>Daftar Barang</h2>
+    <table id="tabelBarang">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama Barang</th>
+                <th>Harga</th>
+                <th>Stok</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h2>Keranjang Belanja</h2>
+    <table id="tabelKeranjang">
+        <thead>
+            <tr>
+                <th>Nama Barang</th>
+                <th>Jumlah</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h2 id="totalBelanja" class="total"></h2>
+    <script src="script.js"></script>
+</body>
+
+</html>
