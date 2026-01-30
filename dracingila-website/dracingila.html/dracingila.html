@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DracinGila – Balas Dendam, Reinkarnasi, Cinta Terlarang dalam 1 Menit!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #000000;
+            --blood-red: #c1121f;
+            --metallic-gold: #d4a017;
+            --dark-gold: #8b6f1f;
+            --neon-pink: #ff006e;
+            --neon-purple: #8338ec;
+            --dark-bg: #0a0a0a;
+            --card-bg: #111111;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: #ffffff;
+            overflow-x: hidden;
+            padding-bottom: 80px;
+        }
+
+        /* Sakura Petals Background Animation */
+        .sakura-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.1;
+        }
+
+        .petal {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #ff006e, #c1121f);
+            border-radius: 50% 0 50% 0;
+            animation: fall linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(193,18,31,0.2) 100%);
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a0000 0%, #0a0a0a 50%, #1a0000 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-blur-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 30% 40%, rgba(193,18,31,0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(212,160,23,0.2) 0%, transparent 50%);
+            backdrop-filter: blur(80px);
+            animation: shimmerBg 8s ease-in-out infinite;
+        }
+
+        @keyframes shimmerBg {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 0.9; }
+        }
+
+        .play-indicator {
+            position: relative;
+            z-index: 2;
+            font-size: 80px;
+            color: var(--blood-red);
+            animation: pulse 2s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(193,18,31,0.8);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .hero-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, transparent 100%);
+            z-index: 3;
+        }
+
+        .hero-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--metallic-gold) 0%, #ffd700 50%, var(--metallic-gold) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(212,160,23,0.5);
+            animation: titleShine 3s ease-in-out infinite;
+        }
+
+        @keyframes titleShine {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+
+        .hero-tagline {
+            font-size: 15px;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .hero-tagline strong {
+            color: var(--metallic-gold);
+            font-weight: 600;
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 18px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-purple) 100%);
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(255,0,110,0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 25px 20px 15px;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--metallic-gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '◆';
+            color: var(--blood-red);
+            font-size: 14px;
+            animation: rotate360 4s linear infinite;
+        }
+
+        @keyframes rotate360 {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .see-all {
+            color: var(--neon-pink);
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .see-all:hover {
+            color: var(--neon-purple);
+            text-shadow: 0 0 10px rgba(255,0,110,0.6);
+        }
+
+        /* Hot Section Grid */
+        .hot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0 20px 25px;
+        }
+
+        .drama-card {
+            position: relative;
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(193,18,31,0.2);
+        }
+
+        .drama-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(193,18,31,0.4), 0 0 20px rgba(212,160,23,0.3);
+            border-color: var(--blood-red);
+        }
+
+        .drama-poster {
+            width: 100%;
+            aspect-ratio: 9/16;
+            background: linear-gradient(135deg, #1a0000, #0a0a0a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drama-poster::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+        }
+
+        .drama-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, var(--blood-red), #8b0000);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 2px 10px rgba(193,18,31,0.6);
+        }
+
+        .drama-info {
+            padding: 12px;
+        }
+
+        .drama-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #ffffff;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .drama-meta {
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(193,18,31,0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--blood-red), var(--metallic-gold));
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(193,18,31,0.6);
+        }
+
+        .continue-button {
+            width: 100%;
+            padding: 8px;
+            background: rgba(193,18,31,0.1);
+            border: 1px solid var(--blood-red);
+            color: var(--blood-red);
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .continue-button:hover {
+            background: var(--blood-red);
+            color: white;
+            box-shadow: 0 0 15px rgba(193,18,31,0.6);
+        }
+
+        /* Category Section */
+        .category-scroll {
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0 20px 25px;
+            display: flex;
+            gap: 12px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .category-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-chip {
+            flex-shrink: 0;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--card-bg), #1a1a1a);
+            border: 1px solid rgba(212,160,23,0.3);
+            border-radius: 25px;
+            color: var(--metallic-gold);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-chip:hover {
+            background: linear-gradient(135deg, var(--metallic-gold), var(--dark-gold));
+            color: var(--black);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212,160,23,0.4);
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: sticky;
+            top: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            z-index: 100;
+            border-bottom: 1px solid rgba(193,18,31,0.2);
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--card-bg);
+            border: 1px solid rgba(193,18,31,0.3);
+            border-radius: 25px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-bar:focus {
+            border-color: var(--metallic-gold);
+            box-shadow: 0 0 20px rgba(212,160,23,0.3);
+        }
+
+        .search-bar::placeholder {
+            color: #666;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(193,18,31,0.3);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            z-index: 1000;
+            box-shadow: 0 -5px 30px rgba(0,0,0,0.8);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #666;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: var(--metallic-gold);
+        }
+
+        .nav-item:hover {
+            color: var(--blood-red);
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            transition: all 0.3s;
+        }
+
+        .nav-item.active .nav-icon {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px rgba(212,160,23,0.6));
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--neon-pink), var(--blood-red));
+            color: white;
+            padding: 10px 16px;
+            border-radius: 25px;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(255,0,110,0.5);
+            animation: slideInBounce 0.6s ease-out, pulseGlow 2s ease-in-out 0.6s infinite;
+            cursor: pointer;
+            z-index: 101;
+        }
+
+        @keyframes slideInBounce {
+            0% { transform: translateX(200px); opacity: 0; }
+            60% { transform: translateX(-10px); opacity: 1; }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 5px 20px rgba(255,0,110,0.5); }
+            50% { box-shadow: 0 5px 30px rgba(255,0,110,0.8), 0 0 20px rgba(255,0,110,0.4); }
+        }
+
+        /* FOMO Elements */
+        .fomo-popup {
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--card-bg), #1a0000);
+            border: 1px solid var(--blood-red);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 10px 40px rgba(193,18,31,0.6);
+            animation: slideUpFomo 0.5s ease-out;
+            z-index: 99;
+            display: none;
+        }
+
+        .fomo-popup.show {
+            display: block;
+        }
+
+        @keyframes slideUpFomo {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .fomo-text {
+            font-size: 13px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .fomo-text strong {
+            color: var(--metallic-gold);
+        }
+
+        /* Detail Page Styles */
+        .detail-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--black);
+            z-index: 1001;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .detail-header {
+            position: sticky;
+            top: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(193,18,31,0.2);
+            z-index: 10;
+        }
+
+        .back-button {
+            font-size: 24px;
+            color: var(--metallic-gold);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            color: var(--blood-red);
+            transform: scale(1.1);
+        }
+
+        .detail-player {
+            width: 100%;
+            aspect-ratio: 9/16;
+            background: linear-gradient(135deg, #1a0000, #0a0a0a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .detail-content {
+            padding: 20px;
+        }
+
+        .detail-title {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--metallic-gold), #ffd700);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .detail-synopsis {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+
+        .episode-list {
+            margin-top: 25px;
+        }
+
+        .episode-item {
+            background: var(--card-bg);
+            border: 1px solid rgba(193,18,31,0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .episode-item:hover {
+            border-color: var(--blood-red);
+            box-shadow: 0 5px 20px rgba(193,18,31,0.3);
+        }
+
+        .episode-item.locked {
+            opacity: 0.6;
+        }
+
+        .episode-info h4 {
+            font-size: 15px;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .episode-info p {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .episode-price {
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .episode-price.free {
+            background: linear-gradient(135deg, #00c853, #00e676);
+        }
+
+        .unlock-icon {
+            font-size: 20px;
+        }
+
+        .bundle-offer {
+            background: linear-gradient(135deg, var(--metallic-gold), var(--dark-gold));
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(212,160,23,0.4);
+            animation: shimmerGold 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmerGold {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .bundle-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 8px;
+        }
+
+        .bundle-subtitle {
+            font-size: 13px;
+            color: rgba(0,0,0,0.7);
+            margin-bottom: 15px;
+        }
+
+        .buy-bundle-btn {
+            background: var(--black);
+            color: var(--metallic-gold);
+            border: none;
+            padding: 14px 30px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .buy-bundle-btn:hover {
+            background: var(--blood-red);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .hot-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .hero-title {
+                font-size: 40px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .hot-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sakura Petals Background -->
+    <div class="sakura-container" id="sakuraContainer"></div>
+
+    <!-- Notification Badge -->
+    <div class="notification-badge" onclick="showFomoPopup()">
+        🔥 Episode Baru Rilis!
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" class="search-bar" placeholder="🔍 Cari drama istana, reinkarnasi, CEO kaya...">
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-video-container">
+            <div class="video-placeholder">
+                <div class="video-blur-overlay"></div>
+                <div class="play-indicator">▶</div>
+            </div>
+            <div class="hero-content">
+                <h1 class="hero-title">DracinGila</h1>
+                <p class="hero-tagline">
+                    <strong>Balas Dendam, Reinkarnasi, Cinta Terlarang dalam 1 Menit!</strong><br>
+                    Nonton Gratis 3 Episode • Lanjut Bayar Koin Mulai Rp1.000/Episode
+                </p>
+                <button class="cta-button" onclick="scrollToHot()">
+                    MULAI NONTON GRATIS
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hot Section -->
+    <section id="hotSection">
+        <div class="section-header">
+            <h2 class="section-title">🔥 Sedang Hot Hari Ini</h2>
+            <a href="#" class="see-all">Lihat Semua →</a>
+        </div>
+        <div class="hot-grid">
+            <div class="drama-card" onclick="openDetail('Permaisuri Balas Dendam Berdarah')">
+                <div class="drama-poster">
+                    <span class="drama-badge">TOP 1</span>
+                    👑
+                </div>
+                <div class="drama-info">
+                    <h3 class="drama-title">Permaisuri Balas Dendam Berdarah</h3>
+                    <p class="drama-meta">90 Episode • Istana Intrik</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 45%"></div>
+                    </div>
+                    <button class="continue-button">Lanjut Nonton</button>
+                </div>
+            </div>
+
+            <div class="drama-card" onclick="openDetail('CEO Kembali ke Masa Lalu')">
+                <div class="drama-poster">
+                    <span class="drama-badge">TRENDING</span>
+                    💼
+                </div>
+                <div class="drama-info">
+                    <h3 class="drama-title">CEO Kembali ke Masa Lalu</h3>
+                    <p class="drama-meta">85 Episode • Reinkarnasi</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 30%"></div>
+                    </div>
+                    <button class="continue-button">Lanjut Nonton</button>
+                </div>
+            </div>
+
+            <div class="drama-card" onclick="openDetail('Cinta Terlarang Pangeran')">
+                <div class="drama-poster">
+                    <span class="drama-badge">BARU</span>
+                    ⚔️
+                </div>
+                <div class="drama-info">
+                    <h3 class="drama-title">Cinta Terlarang Pangeran</h3>
+                    <p class="drama-meta">75 Episode • Kaisar</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 15%"></div>
+                    </div>
+                    <button class="continue-button">Lanjut Nonton</button>
+                </div>
+            </div>
+
+            <div class="drama-card" onclick="openDetail('Jiwa Gentayangan Mencari Keadilan')">
+                <div class="drama-poster">
+                    <span class="drama-badge">HOT</span>
+                    👻
+                </div>
+                <div class="drama-info">
+                    <h3 class="drama-title">Jiwa Gentayangan Mencari Keadilan</h3>
+                    <p class="drama-meta">60 Episode • Horor</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%"></div>
+                    </div>
+                    <button class="continue-button">Lanjut Nonton</button>
+                </div>
+            </div>
+
+            <div class="drama-card" onclick="openDetail('Master Pedang Xianxia')">
+                <div class="drama-poster">
+                    <span class="drama-badge">RATING 9.5</span>
+                    🗡️
+                </div>
+                <div class="drama-info">
+                    <h3 class="drama-title">Master Pedang Xianxia Terbang</h3>
+                    <p class="drama-meta">100 Episode • Xianxia</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <button class="continue-button">Mulai Nonton</button>
+                </div>
+            </div>
+
+            <div class="drama-card" onclick="openDetail('Mantan Miskin Jadi Milyarder')">
+                <div class="drama-poster">
+                    <span class="drama-badge">VIRAL</span>
+                    💰
+                </div>
+                <div class="drama-info">
+                    <h3 class="drama-title">Mantan Miskin Jadi Milyarder</h3>
+                    <p class="drama-meta">80 Episode • Modern</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%"></div>
+                    </div>
+                    <button class="continue-button">Lanjut Nonton</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Section -->
+    <section>
+        <div class="section-header">
+            <h2 class="section-title">📂 Kategori</h2>
+        </div>
+        <div class="category-scroll">
+            <div class="category-chip">👑 Istana Intrik</div>
+            <div class="category-chip">🔄 Reinkarnasi Jiwa</div>
+            <div class="category-chip">💼 CEO Kaya vs Mantan Miskin</div>
+            <div class="category-chip">⚔️ Xianxia Pedang Terbang</div>
+            <div class="category-chip">❤️ Cinta Terlarang Kaisar</div>
+            <div class="category-chip">🔥 Pembalasan Dendam Modern</div>
+            <div class="category-chip">👻 Horor Jiwa Gentayangan</div>
+            <div class="category-chip">🏥 Dokter Jenius Reinkarnasi</div>
+            <div class="category-chip">🎭 Drama Keluarga Kaya</div>
+        </div>
+    </section>
+
+    <!-- New Releases -->
+    <section>
+        <div class="section-header">
+            <h2 class="section-title">✨ Rilis Terbaru</h2>
+            <a href="#" class="see-all">Lihat Semua →</a>
+        </div>
+        <div class="hot-grid">
+            <div class="drama-card">
+                <div class="drama-poster">
+                    <span class="drama-badge">BARU!</span>
+                    🌸
+                </div>
+                <div class="drama-info">
+                    <h3 class="drama-title">Putri Sakura Kembali Hidup</h3>
+                    <p class="drama-meta">70 Episode • Fantasy</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <button class="continue-button">Mulai Nonton</button>
+                </div>
+            </div>
+
+            <div class="drama-card">
+                <div class="drama-poster">
+                    <span class="drama-badge">EKSKLUSIF</span>
+                    💎
+                </div>
+                <div class="drama-info">
+                    <h3 class="drama-title">Pewaris Tersembunyi Dinasti</h3>
+                    <p class="drama-meta">95 Episode • Misteri</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <button class="continue-button">Mulai Nonton</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOMO Popup -->
+    <div class="fomo-popup" id="fomoPopup">
+        <p class="fomo-text">🎉 <strong>Episode 45 "Permaisuri Balas Dendam Berdarah"</strong> baru rilis! Jangan sampai ketinggalan cliffhanger paling kejam!</p>
+        <button class="cta-button" onclick="closeFomoPopup()">TONTON SEKARANG</button>
+    </div>
+
+    <!-- Detail Page -->
+    <div class="detail-page" id="detailPage">
+        <div class="detail-header">
+            <span class="back-button" onclick="closeDetail()">←</span>
+            <h3 style="font-family: 'Cinzel', serif; color: var(--metallic-gold);">Detail Drama</h3>
+        </div>
+        <div class="detail-player">
+            <div class="play-indicator">▶</div>
+        </div>
+        <div class="detail-content">
+            <h1 class="detail-title" id="detailTitle">Permaisuri Balas Dendam Berdarah</h1>
+            <p class="detail-synopsis">
+                Setelah dikhianati oleh suami dan saudara tiri, Permaisuri Li Xueyan kembali hidup ke 10 tahun lalu. 
+                Kali ini, dia tidak akan membiarkan siapapun mengambil kebahagiaan dan tahtanya. 
+                Dengan ingatan masa depan, dia akan membalas dendam dengan cara yang paling kejam...
+            </p>
+
+            <div class="bundle-offer">
+                <div class="bundle-title">⭐ PAKET HEMAT 50 EPISODE</div>
+                <div class="bundle-subtitle">Hemat 40% • Hanya Rp35.000 (Normal Rp50.000)</div>
+                <button class="buy-bundle-btn">BELI SEKARANG</button>
+            </div>
+
+            <div class="episode-list">
+                <div class="section-header" style="padding: 0 0 10px 0;">
+                    <h3 style="font-family: 'Cinzel', serif; font-size: 18px; color: var(--metallic-gold);">📺 Daftar Episode</h3>
+                </div>
+
+                <div class="episode-item">
+                    <div class="episode-info">
+                        <h4>Episode 1: Kembali ke Masa Lalu</h4>
+                        <p>60 detik • Gratis</p>
+                    </div>
+                    <span class="episode-price free">GRATIS</span>
+                </div>
+
+                <div class="episode-item">
+                    <div class="episode-info">
+                        <h4>Episode 2: Rencana Pembalasan Dimulai</h4>
+                        <p>90 detik • Gratis</p>
+                    </div>
+                    <span class="episode-price free">GRATIS</span>
+                </div>
+
+                <div class="episode-item">
+                    <div class="episode-info">
+                        <h4>Episode 3: Mengubah Takdir</h4>
+                        <p>90 detik • Gratis</p>
+                    </div>
+                    <span class="episode-price free">GRATIS</span>
+                </div>
+
+                <div class="episode-item locked">
+                    <div class="episode-info">
+                        <h4>Episode 4: Rahasia Terungkap 🔒</h4>
+                        <p>85 detik • Berbayar</p>
+                    </div>
+                    <span class="episode-price">1.000 Koin</span>
+                </div>
+
+                <div class="episode-item locked">
+                    <div class="episode-info">
+                        <h4>Episode 5: Pertemuan dengan Pangeran 🔒</h4>
+                        <p>95 detik • Berbayar</p>
+                    </div>
+                    <span class="episode-price">1.000 Koin</span>
+                </div>
+
+                <div class="episode-item locked">
+                    <div class="episode-info">
+                        <h4>Episode 6: Persekongkolan Terbongkar 🔒</h4>
+                        <p>90 detik • Berbayar</p>
+                    </div>
+                    <span class="episode-price">1.000 Koin</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <div class="section-header" style="padding: 0 0 10px 0;">
+                    <h3 style="font-family: 'Cinzel', serif; font-size: 18px; color: var(--metallic-gold);">💡 Kalau Suka Ini, Coba Ini</h3>
+                </div>
+                <div class="hot-grid">
+                    <div class="drama-card">
+                        <div class="drama-poster">
+                            <span class="drama-badge">MIRIP</span>
+                            👸
+                        </div>
+                        <div class="drama-info">
+                            <h3 class="drama-title">Selir Terbuang Jadi Ratu</h3>
+                            <p class="drama-meta">88 Episode • Istana</p>
+                            <button class="continue-button">Mulai Nonton</button>
+                        </div>
+                    </div>
+
+                    <div class="drama-card">
+                        <div class="drama-poster">
+                            <span class="drama-badge">SERUPA</span>
+                            💔
+                        </div>
+                        <div class="drama-info">
+                            <h3 class="drama-title">Istri CEO Dikhianati</h3>
+                            <p class="drama-meta">75 Episode • Modern</p>
+                            <button class="continue-button">Mulai Nonton</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-item active">
+            <div class="nav-icon">🏠</div>
+            <span>Home</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">🔥</div>
+            <span>Hot</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">📂</div>
+            <span>Kategori</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">👤</div>
+            <span>Profil</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon">🪙</div>
+            <span>Koin</span>
+        </div>
+    </nav>
+
+    <script>
+        // Create Sakura Petals
+        function createSakuraPetals() {
+            const container = document.getElementById('sakuraContainer');
+            const petalCount = 20;
+            
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                petal.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(petal);
+            }
+        }
+
+        // Scroll to Hot Section
+        function scrollToHot() {
+            document.getElementById('hotSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // FOMO Popup
+        function showFomoPopup() {
+            const popup = document.getElementById('fomoPopup');
+            popup.classList.add('show');
+            setTimeout(() => {
+                popup.classList.remove('show');
+            }, 5000);
+        }
+
+        function closeFomoPopup() {
+            document.getElementById('fomoPopup').classList.remove('show');
+        }
+
+        // Auto show FOMO popup
+        setTimeout(showFomoPopup, 3000);
+
+        // Detail Page
+        function openDetail(title) {
+            document.getElementById('detailTitle').textContent = title;
+            document.getElementById('detailPage').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDetail() {
+            document.getElementById('detailPage').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Bottom Nav Active State
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                navItems.forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Initialize
+        createSakuraPetals();
+
+        // Confetti Effect on Episode Unlock (simulation)
+        function unlockEpisode(element) {
+            // Simple confetti simulation with particles
+            const colors = ['#c1121f', '#d4a017', '#ff006e', '#8338ec'];
+            const confettiCount = 30;
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '8px';
+                confetti.style.height = '8px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = '50%';
+                confetti.style.top = '50%';
+                confetti.style.borderRadius = '50%';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.zIndex = '9999';
+                
+                document.body.appendChild(confetti);
+                
+                const angle = (Math.PI * 2 * i) / confettiCount;
+                const velocity = 100 + Math.random() * 100;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity;
+                
+                confetti.animate([
+                    { transform: 'translate(0, 0)', opacity: 1 },
+                    { transform: `translate(${tx}px, ${ty}px)`, opacity: 0 }
+                ], {
+                    duration: 1000,
+                    easing: 'ease-out'
+                }).onfinish = () => confetti.remove();
+            }
+        }
+
+        // Add click effect to locked episodes
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.episode-item.locked')) {
+                unlockEpisode(e.target);
+            }
+        });
+    </script>
+</body>
+</html>
